@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "444217293354",
+    "firebase_url": "https://easyweatherapp-abd6a.firebaseio.com",
+    "project_id": "easyweatherapp-abd6a",
+    "storage_bucket": "easyweatherapp-abd6a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444217293354:android:cb79ca2191f0cae41a2153",
+        "android_client_info": {
+          "package_name": "com.kimlehtinen.easyweatherapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444217293354-u8nh92l8qgp1pi5ddpbmrh1atevlj3f6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kimlehtinen.easyweatherapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "444217293354-7ncppi79a6jj9g5cqkq22mi52kdo91o8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjFabIw7ShpeppM30BYuqxQInudg0b8No"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444217293354-7ncppi79a6jj9g5cqkq22mi52kdo91o8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
