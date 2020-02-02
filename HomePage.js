@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import firebase from 'react-native-firebase'
+import AppTabs from './components/AppTabs'
 import {
   Button,
   Text,
@@ -26,8 +27,21 @@ export default class HomePage extends React.Component {
 
     componentDidMount() {
         const { currentUser } = firebase.auth()
-        this.setState({ user: currentUser })
+        this.setState({ currentUser })
+        // this.getMoods(currentUser)
     }
+
+    /*getMoods(user) {
+      const ref = firebase.firestore().collection("moods").where("user", "==", user.uid);
+
+      ref.get().then(function(q) {
+        q.forEach(function(doc) {
+          console.log(doc.data());
+        });
+      }).catch(function(error) {
+        console.log("Error getting document:", error);
+      });
+    }*/
 
     logOut = async () => {
         try {
@@ -39,7 +53,7 @@ export default class HomePage extends React.Component {
     }
 
     render() {
-        const { user } = this.state
+
         return (
             <Container>
             <Header>
@@ -52,24 +66,11 @@ export default class HomePage extends React.Component {
                 </Button>
               </Left>
               <Body>
-                <Title>Current city</Title>
+                <Title>Mood</Title>
               </Body>
               <Right />
             </Header>
-            <Tabs>
-            <Tab heading={ <TabHeading><Text>Today</Text></TabHeading>}>
-                <Text>Weather today</Text>
-            </Tab>
-            <Tab heading={ <TabHeading><Text>Week</Text></TabHeading>}>
-                <Text>Weather this week</Text>
-            </Tab>
-            <Tab heading={ <TabHeading><Text>Tab 3</Text></TabHeading>}>
-                <Text>Tab 3</Text>
-            </Tab>
-            </Tabs>
-            <Content padder>
-                <Text>justifyContent</Text>
-            </Content>
+            <AppTabs/>
           </Container>
         )
     }
