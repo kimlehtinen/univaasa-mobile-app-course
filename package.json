@@ -14,9 +14,6 @@
     "postinstall": "npx jetify"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^6.2.0",
-    "@react-native-firebase/auth": "^6.2.0",
-    "@react-native-firebase/firestore": "^6.2.0",
     "expo": "^36.0.2",
     "jetifier": "^1.6.4",
     "native-base": "^2.13.8",
