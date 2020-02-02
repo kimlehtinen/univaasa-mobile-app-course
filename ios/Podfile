@@ -47,6 +47,8 @@ target 'easyweatherapp' do
   pod 'Fabric', '~> 1.10.2'
   pod 'Crashlytics', '~> 3.14.0'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'easyweatherappTests' do
     inherit! :search_paths
     # Pods for testing

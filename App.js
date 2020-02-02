@@ -5,15 +5,20 @@ import LoginLoadingPage from './LoginLoadingPage'
 import RegisterPage from './RegisterPage'
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
+import { createDrawerNavigator } from 'react-navigation-drawer'
+import SideBar from "./components/Sidebar";
 
-export default createAppContainer(createSwitchNavigator(
-{
-LoginLoadingPage,
-RegisterPage,
-LoginPage,
-HomePage
-},
-{
-initialRouteName: 'LoginLoadingPage'
-}
-));
+
+const App = createDrawerNavigator(
+  {
+    LoginLoadingPage: { screen: LoginLoadingPage },
+    LoginPage: { screen: LoginPage },
+    RegisterPage: { screen: RegisterPage },
+    Home: { screen: HomePage },
+  },
+  {
+    contentComponent: props => <SideBar {...props} />
+  }
+);
+
+export default createAppContainer(App);

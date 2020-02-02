@@ -14,13 +14,16 @@
     "postinstall": "npx jetify"
   },
   "dependencies": {
+    "expo": "^36.0.2",
     "jetifier": "^1.6.4",
     "native-base": "^2.13.8",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.5.3",
-    "react-navigation": "^4.0.10"
+    "react-native-reanimated": "^1.7.0",
+    "react-navigation": "^4.0.10",
+    "react-navigation-drawer": "^2.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
