@@ -6,8 +6,8 @@ import { Spinner } from 'native-base'
 export default class LoginLoadingPage extends React.Component {
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
-            // let nextPage = user ? 'HomePage' : 'LoginPage'
-            // this.props.navigation.navigate(nextPage)
+            let nextPage = user ? 'Home' : 'LoginPage'
+            this.props.navigation.navigate(nextPage)
         })
     }
   
