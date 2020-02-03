@@ -31,18 +31,6 @@ export default class HomePage extends React.Component {
         // this.getMoods(currentUser)
     }
 
-    /*getMoods(user) {
-      const ref = firebase.firestore().collection("moods").where("user", "==", user.uid);
-
-      ref.get().then(function(q) {
-        q.forEach(function(doc) {
-          console.log(doc.data());
-        });
-      }).catch(function(error) {
-        console.log("Error getting document:", error);
-      });
-    }*/
-
     logOut = async () => {
         try {
             await firebase.auth().signOut()

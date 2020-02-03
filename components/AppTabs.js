@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Content, Footer, FooterTab, Button, Text, Icon } from 'native-base';
+import Moods from './Moods'
+
 export default class AppTabs extends Component {
   state = { 
-    selectedTab: 'moods' 
+    selectedTab: 'moods'
   }
 
   currentTab() {
     switch (this.state.selectedTab) {
       case 'moods':
-        return (<Text>Moods</Text>);
+        return (<Moods/>);
         break;
       case 'newmood':
         return (<Text>New mood</Text>);

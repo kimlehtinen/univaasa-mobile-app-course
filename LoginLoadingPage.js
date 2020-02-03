@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, ImageBackground } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import firebase from 'react-native-firebase'
 import { Spinner } from 'native-base'
 
