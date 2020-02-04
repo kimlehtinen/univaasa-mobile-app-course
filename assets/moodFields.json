@@ -4,7 +4,8 @@
        "fields":{ 
           "food_quality":{ 
              "text":"Food quality",
-             "type":"radio"
+             "type":"radio",
+             "value": null
           }
        }
     },
@@ -13,23 +14,28 @@
        "fields":{ 
           "hobby_chilling":{ 
              "text":"Chilling",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "hobby_gaming":{ 
              "text":"Gaming",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "hobby_reading":{ 
              "text":"Reading",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "hobby_sport":{ 
              "text":"Sport",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "hobby_tv_movie":{ 
              "text":"TV/Movies/Series",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           }
        }
     },
@@ -38,23 +44,28 @@
        "fields":{ 
           "home_cleaned":{ 
              "text":"Cleaned",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "home_dishes":{ 
              "text":"Dishes",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "home_food":{ 
              "text":"Food",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "home_laundry":{ 
              "text":"Laundry",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           },
           "home_yardwork":{ 
              "text":"Yardwork",
-             "type":"radio"
+             "type":"radio",
+             "value": false
           }
        }
     },
@@ -63,7 +74,8 @@
        "fields":{ 
           "notes":{ 
              "text":"",
-             "type":"textarea"
+             "type":"textarea",
+             "value": null
           }
        }
     }

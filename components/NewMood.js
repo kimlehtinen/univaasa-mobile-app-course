@@ -6,7 +6,14 @@ import NewMoodSubject from './NewMoodSubject'
 export default class NewMood extends Component {
 
     state = { 
-        fields: null
+        fields: null,
+        newMood: {}
+    }
+
+    updateValue(field, value) {
+        const newMood = this.state.newMood;
+        newMood[field] = value
+        this.setState({newMood})
     }
 
     componentDidMount() {
@@ -18,7 +25,15 @@ export default class NewMood extends Component {
         return (
             <Form>
                 { this.state.fields &&
-                Object.keys(this.state.fields).map((subjectKey) => <NewMoodSubject key={subjectKey} subject={this.state.fields[subjectKey]} />)}
+                Object.keys(this.state.fields).map((subjectKey) => {
+                    return (
+                        <NewMoodSubject 
+                        key={subjectKey}
+                        subject={this.state.fields[subjectKey]} 
+                        updateValue={this.updateValue.bind(this)} 
+                        />
+                    )
+                })}
             </Form>
         )
     }
