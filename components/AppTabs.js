@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Content, Footer, FooterTab, Button, Text, Icon } from 'native-base';
 import Moods from './Moods'
+import NewMood from './NewMood'
 
 export default class AppTabs extends Component {
   state = { 
@@ -13,7 +14,7 @@ export default class AppTabs extends Component {
         return (<Moods/>);
         break;
       case 'newmood':
-        return (<Text>New mood</Text>);
+        return (<NewMood/>);
         break;
         case 'stats':
           return (<Text>Stats</Text>);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native'
-import { Spinner, Text } from 'native-base'
+import { Spinner } from 'native-base'
 import firebase from 'react-native-firebase'
 import MoodTeaser from './MoodTeaser'
 
