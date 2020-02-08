@@ -1,11 +1,43 @@
 { 
+    "dates":{ 
+        "text":"Date",
+        "fields":{ 
+           "date":{ 
+              "text":"",
+              "type":"date",
+              "value": null
+           }
+        }
+    },
     "food":{ 
        "text":"Food",
        "fields":{ 
           "food_quality":{ 
              "text":"Food quality",
              "type":"radio",
-             "value": null
+             "value": 0,
+             "options": [
+                {
+                    "text": "Great",
+                    "value": 5
+                },
+                {
+                    "text": "Good",
+                    "value": 4
+                },
+                {
+                    "text": "Meh",
+                    "value": 3
+                },
+                {
+                    "text": "Bad",
+                    "value": 2
+                },
+                {
+                    "text": "Awful",
+                    "value": 1
+                }
+             ]
           }
        }
     },
