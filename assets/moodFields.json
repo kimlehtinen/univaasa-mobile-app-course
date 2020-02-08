@@ -9,6 +9,43 @@
            }
         }
     },
+    "overAllFeeling": {
+        "text":"Overall feeling",
+        "fields":{ 
+            "date":{ 
+                "text":"",
+                "type":"radio",
+                "value": 0,
+                "options": [
+                    {
+                        "text": "Great",
+                        "showOptionAsIcon":true,
+                        "value": 5
+                    },
+                    {
+                        "text": "Good",
+                        "showOptionAsIcon":true,
+                        "value": 4
+                    },
+                    {
+                        "text": "Meh",
+                        "showOptionAsIcon":true,
+                        "value": 3
+                    },
+                    {
+                        "text": "Bad",
+                        "showOptionAsIcon":true,
+                        "value": 2
+                    },
+                    {
+                        "text": "Awful",
+                        "showOptionAsIcon":true,
+                        "value": 1
+                    }
+                ]
+            }
+         }
+    },
     "food":{ 
        "text":"Food",
        "fields":{ 

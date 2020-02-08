@@ -10,6 +10,7 @@ import {
     Item,
     Label,
     DatePicker,
+    Icon,
     H3
 } from 'native-base'
 
@@ -46,7 +47,7 @@ export default class NewMoodField extends Component {
                     return (
                         <ListItem key={optionKey}>
                         <Left>
-                            <Text onPress={() => this.onRadioPress(options[optionKey].value)}>{options[optionKey].text}</Text>
+                            {this.getRadioButtonText(options[optionKey])}
                         </Left>
                         <Right>
                             <Radio 
@@ -99,6 +100,14 @@ export default class NewMoodField extends Component {
         }
     }
 
+    getRadioButtonText(radioButtonOption) {
+        if (radioButtonOption.showOptionAsIcon) {
+            return this.teaserEmoji(radioButtonOption.value)
+        }
+
+        return <Text onPress={() => this.onRadioPress(radioButtonOption.value)}>{radioButtonOption.text}</Text>
+    }
+
     onRadioPress(val) {
         const newValue = val
         this.setState({value: newValue})
@@ -129,6 +138,27 @@ export default class NewMoodField extends Component {
         }
 
         return ''
+    }
+
+    teaserEmoji(overallMoodValue) {
+        switch (overallMoodValue) {
+            case 1:
+                return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome5" name="sad-cry" />)
+                break
+            case 2:
+                return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome" name="frown-o" />)
+                break
+            case 3:
+                return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome" name="meh-o" />)
+                break
+            case 4:
+                return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome" name="smile-o" />)
+                break
+            case 5:
+                return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome5" name="laugh-beam" />)
+                break
+            default:
+        }
     }
 
     render() {
