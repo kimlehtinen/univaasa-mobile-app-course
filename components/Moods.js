@@ -21,17 +21,19 @@ export default class Moods extends Component {
     async getMoods(user) {
         this.setState({ isLoading: true })
 
-        const ref = firebase.firestore().collection("moods").where("user", "==", user.uid);
+        const ref = firebase.firestore().collection("moods").where("user", "==", user.uid)
         const moods = []
         
         await ref.get().then(function(q) {
             q.forEach(function(doc) {
-                console.log(doc.data())
                 moods.push(doc.data())
             });
         }).catch(function(error) {
             console.log("Error getting moods:", error);
         });
+
+        moods.sort((a, b) => new Date(a.date.toDate()) - new Date(b.date.toDate()));
+        moods.reverse()
 
         this.setState({
             moods,
