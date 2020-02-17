@@ -27,6 +27,7 @@ export default class Moods extends Component {
         await ref.get().then(function(q) {
             q.forEach(function(doc) {
                 moods.push(doc.data())
+                // console.log(moods)
             });
         }).catch(function(error) {
             console.log("Error getting moods:", error);

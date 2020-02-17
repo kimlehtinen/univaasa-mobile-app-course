@@ -38,28 +38,41 @@ export default class NewMoodField extends Component {
     }
 
     renderField(field) {
-        if (field.type === 'radio' && field.options) {
-            const options = field.options
-            return (
-                <>
-                <H3>{field.text}</H3>
-                {Object.keys(options).map((optionKey) => {
-                    return (
-                        <ListItem key={optionKey}>
-                        <Left>
-                            {this.getRadioButtonText(options[optionKey])}
-                        </Left>
-                        <Right>
-                            <Radio 
-                            selected={this.state.value === options[optionKey].value} 
-                            onPress={() => this.onRadioPress(options[optionKey].value)} 
-                            />
-                        </Right>
-                        </ListItem>
-                    )
-                })}
-                </>
-            )
+        if (field.type === 'radio') {
+            if (field.options) {
+                const options = field.options
+                return (
+                    <>
+                    {Object.keys(options).map((optionKey) => {
+                        return (
+                            <ListItem key={optionKey}>
+                            <Left>
+                                {this.getRadioButtonText(options[optionKey])}
+                            </Left>
+                            <Right>
+                                <Radio 
+                                selected={this.state.value === options[optionKey].value} 
+                                onPress={() => this.onRadioPress(options[optionKey].value)} 
+                                />
+                            </Right>
+                            </ListItem>
+                        )
+                    })}
+                    </>
+                )
+            } else {
+                return (
+                    <ListItem>
+                    <Left>
+                        <Text onPress={() => this.onRadioPress()}>{field.text}</Text>
+                    </Left>
+                    <Right>
+                        <Radio selected={this.state.value} onPress={() => this.onRadioPressStandard()} />
+                    </Right>
+                    </ListItem>
+                )
+            }
+            
         }
         if (field.type === 'textarea') {
             return (
@@ -102,7 +115,7 @@ export default class NewMoodField extends Component {
 
     getRadioButtonText(radioButtonOption) {
         if (radioButtonOption.showOptionAsIcon) {
-            return this.teaserEmoji(radioButtonOption.value)
+            return this.teaserEmojiIcon(radioButtonOption.value)
         }
 
         return <Text onPress={() => this.onRadioPress(radioButtonOption.value)}>{radioButtonOption.text}</Text>
@@ -110,6 +123,12 @@ export default class NewMoodField extends Component {
 
     onRadioPress(val) {
         const newValue = val
+        this.setState({value: newValue})
+        this.props.updateValue(this.props.fieldName, newValue)
+    }
+
+    onRadioPressStandard() {
+        const newValue = !this.state.value
         this.setState({value: newValue})
         this.props.updateValue(this.props.fieldName, newValue)
     }
@@ -140,7 +159,7 @@ export default class NewMoodField extends Component {
         return ''
     }
 
-    teaserEmoji(overallMoodValue) {
+    teaserEmojiIcon(overallMoodValue) {
         switch (overallMoodValue) {
             case 1:
                 return (<Icon onPress={() => this.onRadioPress(overallMoodValue)} type="FontAwesome5" name="sad-cry" />)
