@@ -12,7 +12,7 @@
     "overAllFeeling": {
         "text":"Overall feeling",
         "fields":{ 
-            "date":{ 
+            "overall_mood":{ 
                 "text":"",
                 "type":"radio",
                 "value": 0,
@@ -50,7 +50,7 @@
        "text":"Food",
        "fields":{ 
           "food_quality":{ 
-             "text":"Food quality",
+             "text":"",
              "type":"radio",
              "value": 0,
              "options": [
@@ -144,7 +144,7 @@
           "notes":{ 
              "text":"",
              "type":"textarea",
-             "value": null
+             "value": ""
           }
        }
     }

@@ -39,7 +39,7 @@ export default class LoginPage extends React.Component {
                     <View style={styles.opacityBg}>
                         <Header style={styles.loginHeader}>
                             <Body style={styles.loginTitle}>
-                                <Title>Easy Weather App</Title>
+                                <Title>Daily Mood App</Title>
                             </Body>
                         </Header>
                         <Content padder>

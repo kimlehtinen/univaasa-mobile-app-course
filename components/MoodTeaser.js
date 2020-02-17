@@ -19,7 +19,7 @@ export default class MoodTeaser extends Component {
                 return (<Icon type="FontAwesome" name="smile-o" />)
                 break
             case 5:
-                return ''
+                return (<Icon type="FontAwesome5" name="laugh-beam" />)
                 break
             default:
         }
