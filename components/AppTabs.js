@@ -5,9 +5,12 @@ import NewMood from './NewMood'
 
 export default class AppTabs extends Component {
   state = { 
-    selectedTab: 'moods'
+    selectedTab: 'moods' // default tab
   }
 
+  /**
+   * A function that always show currently selected tab
+   */
   currentTab() {
     switch (this.state.selectedTab) {
       case 'moods':

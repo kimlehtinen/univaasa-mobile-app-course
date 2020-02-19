@@ -3,7 +3,15 @@ import { Image } from 'react-native'
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base'
 
 export default class MoodTeaser extends Component {
+    /*
+        Teaser card component for single Mood 
+    */
 
+    /**
+     * Get emoji/icon face based on overall mood
+     * 
+     * @param {*} overallMood
+     */
     teaserEmoji(overallMood) {
         switch (overallMood) {
             case 1:
@@ -25,6 +33,12 @@ export default class MoodTeaser extends Component {
         }
     }
 
+    /**
+     * Check if mood date is today
+     * 
+     * @param {*} moodDate 
+     * @return {boolean}
+     */
     isMoodToday(moodDate) {
         return new Date() === new Date(moodDate.toDate())
     }

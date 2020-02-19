@@ -23,6 +23,9 @@ export default class LoginPage extends React.Component {
         authError: null 
     }
     
+    /**
+     * Login user using firebase with given email and password
+     */
     loginUser = () => {
         const { email, password } = this.state
         firebase

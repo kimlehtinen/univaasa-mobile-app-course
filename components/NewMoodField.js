@@ -15,6 +15,13 @@ import {
 } from 'native-base'
 
 export default class NewMoodField extends Component {
+    /*
+        NewMoodField component is a child component inside NewMoodSubject component.
+        One subject (parent to a field) can have multiple NewMoodField.
+        NewMoodField is the actual field displayed in a form that users fill in.
+        A form field value is passed from NewMoodField.js (Child) --> NewMoodSubject.js (Parent) --> NewMood.js (Grandparent/actual form).
+        Form subjects and fields come from ../assets/moodFields.json.
+    */
 
     constructor(props) {
         super(props);
@@ -30,6 +37,7 @@ export default class NewMoodField extends Component {
     componentDidMount() {
         this.setState({ value: this.props.field.value })
 
+        // always set current date as default date if this field is a date (which day this mood will be saved on)
         if (this.props.field.type === 'date' && this.props.field.value === null) {
             const now = new Date()
             this.setState({ value: now })
@@ -37,8 +45,16 @@ export default class NewMoodField extends Component {
         }
     }
 
+    /**
+     * This function renders the actual field.
+     * It's rendered differently depending on field type.
+     * 
+     * @param {*} field 
+     */
     renderField(field) {
+        // radio button
         if (field.type === 'radio') {
+            // if radio field has multiple options, render each option
             if (field.options) {
                 const options = field.options
                 return (
@@ -74,6 +90,7 @@ export default class NewMoodField extends Component {
             }
             
         }
+        // textarea
         if (field.type === 'textarea') {
             return (
                 <Item stackedLabel>
@@ -90,6 +107,7 @@ export default class NewMoodField extends Component {
                 </Item>
             )
         }
+        // date (picker)
         if (field.type === 'date') {
             return (
                 <>
@@ -113,6 +131,11 @@ export default class NewMoodField extends Component {
         }
     }
 
+    /**
+     * A function that determines if a text or icon should be shown to describe single radio button
+     * 
+     * @param {*} radioButtonOption 
+     */
     getRadioButtonText(radioButtonOption) {
         if (radioButtonOption.showOptionAsIcon) {
             return this.teaserEmojiIcon(radioButtonOption.value)
@@ -121,34 +144,56 @@ export default class NewMoodField extends Component {
         return <Text onPress={() => this.onRadioPress(radioButtonOption.value)}>{radioButtonOption.text}</Text>
     }
 
+    /**
+     * A function that updates field value on radio button press.
+     * 
+     * @param {*} val 
+     */
     onRadioPress(val) {
         const newValue = val
         this.setState({value: newValue})
         this.props.updateValue(this.props.fieldName, newValue)
     }
 
+    /**
+     * A function that updates field value on radio buttons press.
+     * This one is standard which toggles between true/false
+     */
     onRadioPressStandard() {
         const newValue = !this.state.value
         this.setState({value: newValue})
         this.props.updateValue(this.props.fieldName, newValue)
     }
 
+    /**
+     * A function that updates input field value on change
+     * 
+     * @param {string} text 
+     */
     updateTextInput(text) {
         const val = text
         this.setState({value: val})
         this.props.updateValue(this.props.fieldName, val)
     }
 
+    /**
+     * A function that updates datepicker field value
+     * 
+     * @param {*} date 
+     */
     setDate(date) {
         const newDate = date
         this.setState({ value: newDate })
         this.props.updateValue(this.props.fieldName, newDate)
     }
 
+    /**
+     * A function that displays selected date.
+     * It also shows if selected date is today.
+     */
     getSelectedDate() {
         if (this.state.value) {
-            let date = this.state.value.toString().substr(4, 12);
-
+            let date = this.state.value.toString().substr(4, 12)
             if (date === new Date().toString().substr(4, 12)) {
                 date += ' (TODAY)'
             }
@@ -159,6 +204,11 @@ export default class NewMoodField extends Component {
         return ''
     }
 
+     /**
+     * Get emoji/icon face based on overall mood
+     * 
+     * @param {*} overallMoodValue
+     */
     teaserEmojiIcon(overallMoodValue) {
         switch (overallMoodValue) {
             case 1:

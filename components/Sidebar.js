@@ -13,6 +13,9 @@ import {
 } from "native-base";
 
 export default class SideBar extends React.Component {
+    /**
+     * Logs out signed in user
+     */
     logOut = async () => {
         try {
             await firebase.auth().signOut()

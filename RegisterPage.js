@@ -23,6 +23,9 @@ export default class RegisterPage extends React.Component {
         authError: null 
     }
     
+    /**
+     * Register new user to firebase
+     */
     registerNewUser = () => {
         firebase
           .auth()
