@@ -5,6 +5,7 @@ import LoginLoadingPage from './LoginLoadingPage'
 import RegisterPage from './RegisterPage'
 import LoginPage from './LoginPage'
 import HomePage from './HomePage'
+import SingleMoodPage from './SingleMoodPage'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import SideBar from "./components/Sidebar";
 
@@ -15,6 +16,7 @@ const App = createDrawerNavigator(
     LoginPage: { screen: LoginPage },
     RegisterPage: { screen: RegisterPage },
     Home: { screen: HomePage },
+    SingleMoodPage: { screen: SingleMoodPage },
   },
   {
     contentComponent: props => <SideBar {...props} />
