@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Image } from 'react-native'
-import { H2, Item, ListItem, Label, Card, CardItem, Text, Icon, Left, Body } from 'native-base'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { H2, Item, Button, Label, Card, CardItem, Text, Icon, Left, Body } from 'native-base'
+import { withNavigation } from 'react-navigation'
 import moodFieldsJson from './assets/moodFields.json'
 
-export default class SingleMoodPage extends Component {
+class SingleMoodPage extends Component {
     /*
         Page Single Mood 
     */
@@ -119,6 +120,11 @@ export default class SingleMoodPage extends Component {
         return (
             <Card style={{flex: 0}}>
                 <CardItem>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} >
+                        <Text><Icon type="FontAwesome5" name="chevron-left" /> Back</Text>
+                    </TouchableOpacity>
+                </CardItem>
+                <CardItem>
                 <Left>
                     {this.teaserEmoji(mood.overall_mood)}
                     <Body>
@@ -129,22 +135,54 @@ export default class SingleMoodPage extends Component {
                 </CardItem>
                 {   this.state.fields &&
                     Object.keys(this.state.fields).map((subjectKey) => {
-                            return (
-                                <CardItem key={subjectKey}>
-                                    <Body>
-                                        <H2>{this.state.fields[subjectKey].text}</H2>
-                                        {Object.keys(this.state.fields[subjectKey].fields).map((fieldKey) => {
-                                            return (
-                                                <Item key={fieldKey}>
-                                                    {this.renderField(this.state.fields[subjectKey].fields[fieldKey], fieldKey)}
-                                                </Item>
-                                            )
-                                        })}
-                                    </Body>
-                                </CardItem>
-                    )})
+                        return (
+                            <CardItem key={subjectKey}>
+                                <Body>
+                                    <H2>{this.state.fields[subjectKey].text}</H2>
+                                    {Object.keys(this.state.fields[subjectKey].fields).map((fieldKey) => {
+                                        return (
+                                            <Item key={fieldKey}>
+                                                {this.renderField(this.state.fields[subjectKey].fields[fieldKey], fieldKey)}
+                                            </Item>
+                                        )
+                                    })}
+                                </Body>
+                            </CardItem>
+                        )
+                    })
                 }
+                <CardItem>
+                    <Body>
+                        <Button
+                        style={styles.editButton}
+                        onPress={() => this.props.navigation.navigate('EditMoodPage', {mood: this.state.mood})}
+                        full success rounded
+                        >
+                        <Text>Edit</Text>
+                        </Button>
+                        <Button
+                        style={styles.deleteButton}
+                        onPress={() => this.props.navigation.navigate('EditMoodPage', {mood: this.state.mood})}
+                        full danger rounded
+                        >
+                        <Text>Delete</Text>
+                        </Button>
+                    </Body>
+                </CardItem>
             </Card>
         );
     }
 }
+
+export default withNavigation(SingleMoodPage)
+
+const styles = StyleSheet.create({
+    editButton: {
+        marginTop: 40,
+        marginBottom: 10,
+    },
+    deleteButton: {
+        marginTop: 10,
+        marginBottom: 40,
+    }
+})

@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Form, Toast, Spinner, Button, Text } from 'native-base'
-import moodFieldsJson from '../assets/moodFields.json'
-import NewMoodSubject from './NewMoodSubject'
+import { Form, Spinner, Button, Text } from 'native-base'
+import moodFieldsJson from './assets/moodFields.json'
+import NewMoodSubject from './components/NewMoodSubject'
 import firebase from 'react-native-firebase'
 
-export default class NewMood extends Component {
+export default class EditMoodPage extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = { 
             fields: null,
-            newMood: {},
+            mood: {},
             isLoading: false
         }
     }
@@ -24,42 +24,42 @@ export default class NewMood extends Component {
      * @param {any} value 
      */
     updateValue(field, value) {
-        const newMood = this.state.newMood;
-        newMood[field] = value
-        this.setState({newMood})
+        const mood = this.state.mood;
+        mood[field] = value
+        this.setState({mood})
     }
 
     componentDidMount() {
         const { currentUser } = firebase.auth()
         const fields = JSON.parse(JSON.stringify(moodFieldsJson))
-        const newMood = this.state.newMood
+        const mood = this.state.mood
 
-        this.initNewMood(fields) // initialize new mood state object
+        this.initmood(fields) // initialize new mood state object
 
-        newMood['user'] = currentUser.uid // add current user as owner for this new mood
-        this.setState({ fields, newMood, currentUser })
+        mood['user'] = currentUser.uid // add current user as owner for this new mood
+        this.setState({ fields, mood, currentUser })
     }
 
     /**
      * Store new mood to firestore and delete any duplicates for same date
      */
-    async addNewMood() {
-        let newMoodId = null
-        const { newMood } = this.state
+    async addmood() {
+        let moodId = null
+        const { mood } = this.state
 
         // store new mood
-        await firebase.firestore().collection("moods").add(newMood).then((docRef) => {
-            newMoodId = docRef.id
+        await firebase.firestore().collection("moods").add(mood).then((docRef) => {
+            moodId = docRef.id
         }).catch(function(error) {
             console.log('ERROR:', error)
         });
 
-        if (newMoodId) {
+        if (moodId) {
             // delete duplicates
             let duplicatesQuery = firebase.firestore().collection("moods").where("user", "==", this.state.currentUser.uid)
             await duplicatesQuery.get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
-                        if (doc.data() && doc.id !== newMoodId && new Date(doc.data().date.toDate()).toDateString() == new Date(newMood.date).toDateString()) {
+                        if (doc.data() && doc.id !== moodId && new Date(doc.data().date.toDate()).toDateString() == new Date(mood.date).toDateString()) {
                             doc.ref.delete();
                         }
                     });
@@ -70,18 +70,18 @@ export default class NewMood extends Component {
     }
 
     /**
-     * Initialize this.state.newMood with properties (form fields) from ../assets/moodFields.json
+     * Initialize this.state.mood with properties (form fields) from ../assets/moodFields.json
      * @param {*} fields 
      */
-    initNewMood(fields) {
-        const newMood = this.state.newMood
+    initmood(fields) {
+        const mood = this.state.mood
         Object.keys(fields).map((subjectKey) => {
             const subject = fields[subjectKey]
             Object.keys(subject.fields).map((fieldKey) => {
-                newMood[fieldKey] = subject.fields[fieldKey].value
+                mood[fieldKey] = subject.fields[fieldKey].value
             })
         })
-        this.setState({newMood})
+        this.setState({mood})
     }
 
     render() {
@@ -109,10 +109,10 @@ export default class NewMood extends Component {
 
                 <Button
                 style={styles.submitButton}
-                onPress={() => this.addNewMood()} 
+                onPress={() => this.addmood()} 
                 full success rounded
                 >
-                    <Text>Submit</Text>
+                <Text>Save</Text>
                 </Button>
             </Form>
         )
