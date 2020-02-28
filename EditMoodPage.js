@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Form, Spinner, Button, Text } from 'native-base'
+import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native'
+import { Form, Spinner, Button, Text, Icon } from 'native-base'
 import moodFieldsJson from './assets/moodFields.json'
 import NewMoodSubject from './components/NewMoodSubject'
 import firebase from 'react-native-firebase'
@@ -12,8 +12,10 @@ export default class EditMoodPage extends Component {
 
         this.state = { 
             fields: null,
-            mood: {},
-            isLoading: false
+            editedMood: {},
+            oldMood: {},
+            isLoading: false,
+            editedMoodId: null
         }
     }
 
@@ -24,64 +26,46 @@ export default class EditMoodPage extends Component {
      * @param {any} value 
      */
     updateValue(field, value) {
-        const mood = this.state.mood;
-        mood[field] = value
-        this.setState({mood})
+        const editedMood = this.state.editedMood;
+        editedMood[field] = value
+        this.setState({editedMood})
     }
 
     componentDidMount() {
-        const { currentUser } = firebase.auth()
-        const fields = JSON.parse(JSON.stringify(moodFieldsJson))
-        const mood = this.state.mood
+        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
+            const { currentUser } = firebase.auth()
+            const fields = JSON.parse(JSON.stringify(moodFieldsJson))
+            const editedMood = this.props.navigation.state.params.editedMood
+            const oldMood = editedMood
+            const editedMoodId = editedMood.id
+            delete editedMood['id']
 
-        this.initmood(fields) // initialize new mood state object
+            for (const subject in fields) {
+                if (fields[subject].fields) {
+                    Object.keys(fields[subject].fields).map((field) => {
+                        fields[subject].fields[field].value = editedMood[field];
+                    })
+                }
+            }
 
-        mood['user'] = currentUser.uid // add current user as owner for this new mood
-        this.setState({ fields, mood, currentUser })
+            editedMood['user'] = currentUser.uid // add current user as owner for this new editedMood
+            this.setState({ fields, editedMood, currentUser, editedMoodId, oldMood })
+        });
+    }
+  
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
     /**
-     * Store new mood to firestore and delete any duplicates for same date
+     * Update mood in firestore
      */
-    async addmood() {
-        let moodId = null
-        const { mood } = this.state
-
-        // store new mood
-        await firebase.firestore().collection("moods").add(mood).then((docRef) => {
-            moodId = docRef.id
+    async updateMood() {
+        await firebase.firestore().collection("moods").doc(this.state.editedMoodId).update(this.state.editedMood).then(() => {
+            this.props.navigation.navigate('Home') // show all moods
         }).catch(function(error) {
             console.log('ERROR:', error)
         });
-
-        if (moodId) {
-            // delete duplicates
-            let duplicatesQuery = firebase.firestore().collection("moods").where("user", "==", this.state.currentUser.uid)
-            await duplicatesQuery.get().then(function(querySnapshot) {
-                    querySnapshot.forEach(function(doc) {
-                        if (doc.data() && doc.id !== moodId && new Date(doc.data().date.toDate()).toDateString() == new Date(mood.date).toDateString()) {
-                            doc.ref.delete();
-                        }
-                    });
-            }).catch(function(error) {
-                console.log('ERROR:', error)
-            });
-        }
-    }
-
-    /**
-     * Initialize this.state.mood with properties (form fields) from ../assets/moodFields.json
-     * @param {*} fields 
-     */
-    initmood(fields) {
-        const mood = this.state.mood
-        Object.keys(fields).map((subjectKey) => {
-            const subject = fields[subjectKey]
-            Object.keys(subject.fields).map((fieldKey) => {
-                mood[fieldKey] = subject.fields[fieldKey].value
-            })
-        })
-        this.setState({mood})
     }
 
     render() {
@@ -95,31 +79,50 @@ export default class EditMoodPage extends Component {
         }
 
         return (
-            <Form>
-                { this.state.fields &&
-                Object.keys(this.state.fields).map((subjectKey) => {
-                    return (
-                        <NewMoodSubject 
-                        key={subjectKey}
-                        subject={this.state.fields[subjectKey]} 
-                        updateValue={this.updateValue.bind(this)} 
-                        />
-                    )
-                })}
+            <ScrollView style={styles.container}>
+                <View style={{flex:1}}>
+                    <Form style={styles.form}>
+                        <TouchableOpacity 
+                        style={styles.backButton}
+                        onPress={() => this.props.navigation.navigate('SingleMoodPage', {singleMood: this.state.oldMood})} 
+                        >
+                            <Text><Icon type="FontAwesome5" name="chevron-left" /> Back</Text>
+                        </TouchableOpacity>
+                        { this.state.fields &&
+                        Object.keys(this.state.fields).map((subjectKey) => {
+                            return (
+                                <NewMoodSubject 
+                                key={subjectKey}
+                                subject={this.state.fields[subjectKey]} 
+                                updateValue={this.updateValue.bind(this)} 
+                                />
+                            )
+                        })}
 
-                <Button
-                style={styles.submitButton}
-                onPress={() => this.addmood()} 
-                full success rounded
-                >
-                <Text>Save</Text>
-                </Button>
-            </Form>
+                        <Button
+                        style={styles.submitButton}
+                        onPress={() => this.updateMood()} 
+                        full success rounded
+                        >
+                        <Text>Update</Text>
+                        </Button>
+                    </Form>
+                </View>
+            </ScrollView>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    form: {
+        margin: 20
+    },
+    backButton: {
+        marginBottom: 20
+    },
     submitButton: {
         marginTop: 40,
         marginBottom: 40,

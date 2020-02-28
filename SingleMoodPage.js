@@ -11,15 +11,21 @@ class SingleMoodPage extends Component {
 
     state = { 
         fields: null,
-        mood: null
+        singleMood: null
     }
 
     componentDidMount() {
-        const fields = JSON.parse(JSON.stringify(moodFieldsJson))
-        delete fields["dates"]
-        delete fields["overAllFeeling"]
-        const mood = this.props.navigation.state.params.mood
-        this.setState({ fields, mood })
+        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
+            const fields = JSON.parse(JSON.stringify(moodFieldsJson))
+            delete fields["dates"]
+            delete fields["overAllFeeling"]
+            const singleMood = this.props.navigation.state.params.singleMood
+            this.setState({ fields, singleMood })
+        });
+    }
+  
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
     /**
@@ -72,7 +78,7 @@ class SingleMoodPage extends Component {
                 return (
                     <>
                     {Object.keys(options).map((optionKey) => {
-                        if (this.state.mood[fieldKey] == options[optionKey].value) {
+                        if (this.state.singleMood[fieldKey] == options[optionKey].value) {
                             return (
                                 <Left key={optionKey}>
                                     {this.getRadioButtonText(options[optionKey])}
@@ -82,7 +88,7 @@ class SingleMoodPage extends Component {
                     })}
                     </>
                 )
-            } else if (this.state.mood[fieldKey]) {
+            } else if (this.state.singleMood[fieldKey]) {
                 return (
                     <Left>
                         <Text>{field.text}</Text>
@@ -95,7 +101,7 @@ class SingleMoodPage extends Component {
         if (field.type === 'textarea') {
             return (
                 <Label>
-                    <Text>{this.state.mood[fieldKey]}</Text>
+                    <Text>{this.state.singleMood[fieldKey]}</Text>
                 </Label>
             )
         }
@@ -115,7 +121,11 @@ class SingleMoodPage extends Component {
     }
 
     render() {
-        const mood = this.props.navigation.state.params.mood
+        const singleMood = this.state.singleMood
+
+        if (singleMood == undefined) {
+            return (<Text>Loading</Text>);
+        }
 
         return (
             <Card style={{flex: 0}}>
@@ -126,10 +136,10 @@ class SingleMoodPage extends Component {
                 </CardItem>
                 <CardItem>
                 <Left>
-                    {this.teaserEmoji(mood.overall_mood)}
+                    {this.teaserEmoji(singleMood.overall_mood)}
                     <Body>
-                        <Text>{new Date(mood.date.toDate()).toDateString()}</Text>
-                        {this.isMoodToday(mood.date) && <Text note>TODAY</Text>}
+                        <Text>{new Date(singleMood.date.toDate()).toDateString()}</Text>
+                        {this.isMoodToday(singleMood.date) && <Text note>TODAY</Text>}
                     </Body>
                 </Left>
                 </CardItem>
@@ -155,7 +165,7 @@ class SingleMoodPage extends Component {
                     <Body>
                         <Button
                         style={styles.editButton}
-                        onPress={() => this.props.navigation.navigate('EditMoodPage', {mood: this.state.mood})}
+                        onPress={() => this.props.navigation.navigate('EditMoodPage', {editedMood: this.state.singleMood})}
                         full success rounded
                         >
                         <Text>Edit</Text>

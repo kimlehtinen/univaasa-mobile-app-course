@@ -45,28 +45,21 @@ class MoodTeaser extends React.Component {
     }
 
     render() {
-        const mood = this.props.mood
+        const moodTeaser = this.props.moodTeaser
 
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SingleMoodPage', {mood: this.props.mood})}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SingleMoodPage', {singleMood: this.props.moodTeaser})}>
                 <Card style={{flex: 0}}>
                     <CardItem>
                     <Left>
-                        {this.teaserEmoji(mood.overall_mood)}
+                        {this.teaserEmoji(moodTeaser.overall_mood)}
                         <Body>
-                            <Text>{new Date(mood.date.toDate()).toDateString()}</Text>
-                            {this.isMoodToday(mood.date) && <Text note>TODAY</Text>}
+                            <Text>{new Date(moodTeaser.date.toDate()).toDateString()}</Text>
+                            {this.isMoodToday(moodTeaser.date) && <Text note>TODAY</Text>}
                         </Body>
                     </Left>
                     </CardItem>
                     <CardItem>
-                    {/*<Left>
-                        <Button transparent textStyle={{color: '#87838B'}}>
-                        <Icon name="logo-github" />
-                        <Text>1,926 stars</Text>
-                        </Button>
-                    </Left>
-                    */}
                     </CardItem>
                 </Card>
             </TouchableOpacity>

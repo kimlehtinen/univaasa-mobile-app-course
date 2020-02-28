@@ -10,8 +10,7 @@ import {
     Item,
     Label,
     DatePicker,
-    Icon,
-    H3
+    Icon
 } from 'native-base'
 
 export default class NewMoodField extends Component {

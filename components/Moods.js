@@ -3,8 +3,9 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import { Spinner } from 'native-base'
 import firebase from 'react-native-firebase'
 import MoodTeaser from './MoodTeaser'
+import { withNavigation } from 'react-navigation'
 
-export default class Moods extends Component {
+class Moods extends Component {
     state = { 
         currentUser: null,
         moods: null,
@@ -12,10 +13,15 @@ export default class Moods extends Component {
     }
 
     componentDidMount() {
-        const { currentUser } = firebase.auth()
-        
-        this.setState({ currentUser })
-        this.getMoods(currentUser)
+        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
+            const { currentUser } = firebase.auth()
+            this.setState({ currentUser })
+            this.getMoods(currentUser)
+        });
+    }
+  
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
     async getMoods(user) {
@@ -26,8 +32,9 @@ export default class Moods extends Component {
         
         await ref.get().then(function(q) {
             q.forEach(function(doc) {
-                moods.push(doc.data())
-                // console.log(moods)
+                const mood = doc.data()
+                mood['id'] = doc.id
+                moods.push(mood)
             });
         }).catch(function(error) {
             console.log("Error getting moods:", error);
@@ -53,11 +60,13 @@ export default class Moods extends Component {
 
         return (
             <ScrollView style={styles.container}>
-                {this.state.moods && this.state.moods.map((mood, i) => <MoodTeaser mood={mood} key={i} />)}
+                {this.state.moods && this.state.moods.map((mood, i) => <MoodTeaser moodTeaser={mood} key={i} />)}
             </ScrollView>
         );
     }
 }
+
+export default withNavigation(Moods)
 
 const styles = StyleSheet.create({
     container: {
