@@ -1,26 +1,35 @@
 import React, { Component } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { H2, Item, Button, Label, Card, CardItem, Text, Icon, Left, Body } from 'native-base'
-import { withNavigation } from 'react-navigation'
+import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
 import moodFieldsJson from './assets/moodFields.json'
+import firebase from 'react-native-firebase'
 
 class SingleMoodPage extends Component {
     /*
         Page Single Mood 
     */
 
-    state = { 
-        fields: null,
-        singleMood: null
+    constructor(props) {
+        super(props)
+
+        this.state = { 
+            fields: null,
+            singleMood: null,
+            currentUser: null
+        }
+
+        this.deleteMood.bind(this)
     }
 
     componentDidMount() {
         this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
+            const { currentUser } = firebase.auth()
             const fields = JSON.parse(JSON.stringify(moodFieldsJson))
             delete fields["dates"]
             delete fields["overAllFeeling"]
             const singleMood = this.props.navigation.state.params.singleMood
-            this.setState({ fields, singleMood })
+            this.setState({ fields, singleMood, currentUser })
         });
     }
   
@@ -120,6 +129,33 @@ class SingleMoodPage extends Component {
         return <Text>{radioButtonOption.text}</Text>
     }
 
+    openEditPage() {
+        this.props.navigation.navigate('EditMoodPage', {editedMood: this.state.singleMood})
+    }
+
+    async deleteMood() {
+        const user = this.state.currentUser
+        const singleMood = this.state.singleMood
+        const ref = firebase.firestore().collection("moods").where("user", "==", user.uid)
+        const navigation = this.props.navigation
+
+        console.log('THIS PROPS', this.props)
+        
+        await ref.get().then(function(q) {
+            q.forEach(function(doc) {
+                if (doc.id == singleMood.id) {
+                    doc.ref.delete()
+                    navigation.navigate('Home', {
+                        onGoBack: () => console.log('Going back'),
+                        hasDelete: true
+                    })
+                }
+            });
+        }).catch(function(error) {
+            console.log("Error getting moods:", error);
+        });
+    }
+
     render() {
         const singleMood = this.state.singleMood
 
@@ -165,14 +201,14 @@ class SingleMoodPage extends Component {
                     <Body>
                         <Button
                         style={styles.editButton}
-                        onPress={() => this.props.navigation.navigate('EditMoodPage', {editedMood: this.state.singleMood})}
+                        onPress={() => this.openEditPage()}
                         full success rounded
                         >
                         <Text>Edit</Text>
                         </Button>
                         <Button
                         style={styles.deleteButton}
-                        onPress={() => this.props.navigation.navigate('EditMoodPage', {mood: this.state.mood})}
+                        onPress={() => this.deleteMood()}
                         full danger rounded
                         >
                         <Text>Delete</Text>

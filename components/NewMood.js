@@ -4,8 +4,9 @@ import { Form, Toast, Spinner, Button, Text } from 'native-base'
 import moodFieldsJson from '../assets/moodFields.json'
 import NewMoodSubject from './NewMoodSubject'
 import firebase from 'react-native-firebase'
+import { withNavigation } from 'react-navigation'
 
-export default class NewMood extends Component {
+class NewMood extends Component {
 
     constructor(props) {
         super(props)
@@ -45,11 +46,13 @@ export default class NewMood extends Component {
      */
     async addNewMood() {
         let newMoodId = null
+        let isAdded = false
         const { newMood } = this.state
 
         // store new mood
         await firebase.firestore().collection("moods").add(newMood).then((docRef) => {
             newMoodId = docRef.id
+            isAdded = true
         }).catch(function(error) {
             console.log('ERROR:', error)
         });
@@ -66,6 +69,10 @@ export default class NewMood extends Component {
             }).catch(function(error) {
                 console.log('ERROR:', error)
             });
+        }
+
+        if (isAdded) {
+            this.props.setActiveTab('moods')
         }
     }
 
@@ -118,6 +125,8 @@ export default class NewMood extends Component {
         )
     }
 }
+
+export default withNavigation(NewMood)
 
 const styles = StyleSheet.create({
     submitButton: {

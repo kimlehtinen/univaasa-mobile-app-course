@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import * as React from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
-import { Spinner } from 'native-base'
+import { Spinner, Text } from 'native-base'
 import firebase from 'react-native-firebase'
 import MoodTeaser from './MoodTeaser'
 import { withNavigation } from 'react-navigation'
 
-class Moods extends Component {
+class Moods extends React.Component {
     state = { 
         currentUser: null,
         moods: null,
@@ -13,47 +13,26 @@ class Moods extends Component {
     }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
-            const { currentUser } = firebase.auth()
-            this.setState({ currentUser })
-            this.getMoods(currentUser)
-        });
-    }
-  
-    componentWillUnmount() {
-        this._unsubscribe();
+        this.state.moods = this.props.moods
+        const { currentUser } = firebase.auth()
+        this.setState({ currentUser })
     }
 
-    async getMoods(user) {
-        this.setState({ isLoading: true })
-
-        const ref = firebase.firestore().collection("moods").where("user", "==", user.uid)
-        const moods = []
-        
-        await ref.get().then(function(q) {
-            q.forEach(function(doc) {
-                const mood = doc.data()
-                mood['id'] = doc.id
-                moods.push(mood)
-            });
-        }).catch(function(error) {
-            console.log("Error getting moods:", error);
-        });
-
-        moods.sort((a, b) => new Date(a.date.toDate()) - new Date(b.date.toDate()));
-        moods.reverse()
-
-        this.setState({
-            moods,
-            isLoading: false
-        })
-    }
+    
 
     render() {
         if (this.state.isLoading) {
             return (
                 <View style={styles.spinnerContainer}>
                     <Spinner color='blue' />
+                </View>
+            )
+        }
+
+        if (!(this.state.moods && this.state.moods.length)) {
+            return (
+                <View style={styles.container}>
+                    <Text>No moods added yet</Text>
                 </View>
             )
         }

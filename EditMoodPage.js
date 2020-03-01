@@ -62,7 +62,9 @@ export default class EditMoodPage extends Component {
      */
     async updateMood() {
         await firebase.firestore().collection("moods").doc(this.state.editedMoodId).update(this.state.editedMood).then(() => {
-            this.props.navigation.navigate('Home') // show all moods
+            this.props.navigation.navigate('Home', {
+                onGoBack: () => console.log('Going back'),
+            })
         }).catch(function(error) {
             console.log('ERROR:', error)
         });

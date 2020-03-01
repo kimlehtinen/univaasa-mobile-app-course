@@ -22,13 +22,12 @@ import {
 
 export default class HomePage extends React.Component {
     state = { 
-        user: null 
+        user: null
     }
 
     componentDidMount() {
         const { currentUser } = firebase.auth()
         this.setState({ currentUser })
-        // this.getMoods(currentUser)
     }
 
     logOut = async () => {
@@ -41,6 +40,14 @@ export default class HomePage extends React.Component {
     }
 
     render() {
+
+        if (this.state.isLoading) {
+          return (
+              <View style={styles.spinnerContainer}>
+                  <Spinner color='blue' />
+              </View>
+          )
+        }
 
         return (
             <Container>
