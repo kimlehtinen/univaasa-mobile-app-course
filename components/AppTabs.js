@@ -3,13 +3,15 @@ import { View, StyleSheet, ScrollView } from 'react-native'
 import { Content, Footer, FooterTab, Button, Text, Icon, Spinner } from 'native-base'
 import Moods from './Moods'
 import NewMood from './NewMood'
+import SingleMoodPage from '../SingleMoodPage'
 import firebase from 'react-native-firebase'
 
 export default class AppTabs extends Component {
   state = { 
     selectedTab: 'moods', // default tab
     moods: null,
-    isLoading: false
+    isLoading: false,
+    singleMood: null
   }
 
   /**
@@ -20,27 +22,41 @@ export default class AppTabs extends Component {
       case 'moods':
         return (
           this.state.moods && 
-          <Moods moods={this.state.moods}/>
+          <Moods moods={this.state.moods} openMood={this.openMood.bind(this)}/>
         );
         break;
       case 'newmood':
         return (<NewMood setActiveTab={this.setActiveTab.bind(this)}/>);
         break;
-        case 'stats':
-          return (<Text>Stats</Text>);
-          break;
+      case 'stats':
+        return (<Text>Stats</Text>);
+        break;
+      case 'singlemood':
+        return (
+          this.state.singleMood && 
+          <SingleMoodPage 
+          singleMood={this.state.singleMood}
+          setActiveTab={this.setActiveTab.bind(this)}
+          />
+        );
+        break;
       default:
     }
   }
 
   setActiveTab(tab) {
-    console.log('Change tab')
     const selectedTab = tab
     this.setState({selectedTab})
 
     if (tab == 'moods') {
       this.getMoods(this.state.currentUser)
     }
+  }
+
+  openMood(mood) {
+    const singleMood = mood
+    this.setState({singleMood})
+    this.setActiveTab('singlemood')
   }
 
   componentDidMount() {
@@ -74,6 +90,10 @@ export default class AppTabs extends Component {
     })
   }
 
+  hideTabs() {
+    return this.state.selectedTab === 'singlemood'
+  }
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -88,7 +108,9 @@ export default class AppTabs extends Component {
           <Content padder>
             {this.currentTab()}
           </Content>
-          <Footer>
+          
+          {
+          !this.hideTabs() && <Footer>
             <FooterTab>
               <Button 
               active={this.state.selectedTab==='moods'}
@@ -113,6 +135,7 @@ export default class AppTabs extends Component {
               </Button>
             </FooterTab>
           </Footer>
+          }
         </>
     );
   }

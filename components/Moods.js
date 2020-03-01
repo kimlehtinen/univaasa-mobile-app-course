@@ -18,7 +18,9 @@ class Moods extends React.Component {
         this.setState({ currentUser })
     }
 
-    
+    openMood(mood) {
+        this.props.openMood(mood)
+    }
 
     render() {
         if (this.state.isLoading) {
@@ -39,7 +41,7 @@ class Moods extends React.Component {
 
         return (
             <ScrollView style={styles.container}>
-                {this.state.moods && this.state.moods.map((mood, i) => <MoodTeaser moodTeaser={mood} key={i} />)}
+                {this.state.moods && this.state.moods.map((mood, i) => <MoodTeaser openMood={this.openMood.bind(this)} moodTeaser={mood} key={i} />)}
             </ScrollView>
         );
     }

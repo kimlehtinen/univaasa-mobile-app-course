@@ -44,11 +44,15 @@ class MoodTeaser extends React.Component {
         return new Date() === new Date(moodDate.toDate())
     }
 
+    openMood() {
+        this.props.openMood(this.props.moodTeaser)
+    }
+
     render() {
         const moodTeaser = this.props.moodTeaser
 
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SingleMoodPage', {singleMood: this.props.moodTeaser})}>
+            <TouchableOpacity onPress={() => this.openMood()}>
                 <Card style={{flex: 0}}>
                     <CardItem>
                     <Left>

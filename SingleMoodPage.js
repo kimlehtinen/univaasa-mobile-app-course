@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { BackHandler, StyleSheet, TouchableOpacity } from 'react-native'
 import { H2, Item, Button, Label, Card, CardItem, Text, Icon, Left, Body } from 'native-base'
 import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
 import moodFieldsJson from './assets/moodFields.json'
@@ -20,21 +20,31 @@ class SingleMoodPage extends Component {
         }
 
         this.deleteMood.bind(this)
+        this.hardwareBackButtonClick = this.hardwareBackButtonClick.bind(this);
     }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
-            const { currentUser } = firebase.auth()
-            const fields = JSON.parse(JSON.stringify(moodFieldsJson))
-            delete fields["dates"]
-            delete fields["overAllFeeling"]
-            const singleMood = this.props.navigation.state.params.singleMood
-            this.setState({ fields, singleMood, currentUser })
-        });
+        const { currentUser } = firebase.auth()
+        const fields = JSON.parse(JSON.stringify(moodFieldsJson))
+        delete fields["dates"]
+        delete fields["overAllFeeling"]
+        let singleMood = this.props.singleMood
+
+        if (this.props.navigation.state.singleMood) {
+            singleMood = this.props.navigation.state.singleMood
+        }
+
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.hardwareBackButtonClick);
+        this.setState({ fields, singleMood, currentUser })
     }
-  
+    
+    hardwareBackButtonClick = () => {
+        this.goBack();
+        return true;
+    }
+    
     componentWillUnmount() {
-        this._unsubscribe();
+        this.backHandler.remove()
     }
 
     /**
@@ -138,22 +148,23 @@ class SingleMoodPage extends Component {
         const singleMood = this.state.singleMood
         const ref = firebase.firestore().collection("moods").where("user", "==", user.uid)
         const navigation = this.props.navigation
-
-        console.log('THIS PROPS', this.props)
         
         await ref.get().then(function(q) {
             q.forEach(function(doc) {
                 if (doc.id == singleMood.id) {
                     doc.ref.delete()
                     navigation.navigate('Home', {
-                        onGoBack: () => console.log('Going back'),
-                        hasDelete: true
+                        onGoBack: () => console.log('Going back')
                     })
                 }
             });
         }).catch(function(error) {
             console.log("Error getting moods:", error);
         });
+    }
+
+    async goBack() {
+        this.props.setActiveTab('moods')
     }
 
     render() {
@@ -166,7 +177,7 @@ class SingleMoodPage extends Component {
         return (
             <Card style={{flex: 0}}>
                 <CardItem>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} >
+                    <TouchableOpacity onPress={() => this.goBack()} >
                         <Text><Icon type="FontAwesome5" name="chevron-left" /> Back</Text>
                     </TouchableOpacity>
                 </CardItem>
