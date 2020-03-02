@@ -36,6 +36,10 @@ export default class NewMoodField extends Component {
     componentDidMount() {
         this.setState({ value: this.props.field.value })
 
+        if (this.props.field.type === 'date' && this.props.field.value) {
+            this.setState({ value: this.props.field.value.toDate() })
+        }
+
         // always set current date as default date if this field is a date (which day this mood will be saved on)
         if (this.props.field.type === 'date' && this.props.field.value === null) {
             const now = new Date()
