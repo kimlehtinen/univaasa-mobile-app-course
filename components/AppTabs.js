@@ -5,6 +5,7 @@ import Moods from './Moods'
 import NewMood from './NewMood'
 import SingleMoodPage from '../SingleMoodPage'
 import EditMoodPage from '../EditMoodPage'
+import Stats from './Stats'
 import firebase from 'react-native-firebase'
 
 export default class AppTabs extends Component {
@@ -31,7 +32,7 @@ export default class AppTabs extends Component {
         return (<NewMood setActiveTab={this.setActiveTab.bind(this)}/>);
         break;
       case 'stats':
-        return (<Text>Stats</Text>);
+        return (<Stats moods={this.state.moods} />);
         break;
       case 'singlemood':
         return (
