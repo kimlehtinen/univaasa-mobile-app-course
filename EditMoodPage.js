@@ -4,6 +4,7 @@ import { Form, Spinner, Button, Text, Icon } from 'native-base'
 import moodFieldsJson from './assets/moodFields.json'
 import NewMoodSubject from './components/NewMoodSubject'
 import firebase from 'react-native-firebase'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default class EditMoodPage extends Component {
 
@@ -13,7 +14,7 @@ export default class EditMoodPage extends Component {
         this.state = { 
             fields: null,
             editedMood: {},
-            oldMood: {},
+            unEditedMood: {},
             isLoading: false,
             editedMoodId: null
         }
@@ -32,29 +33,21 @@ export default class EditMoodPage extends Component {
     }
 
     componentDidMount() {
-        this._unsubscribe = this.props.navigation.addListener('willFocus', () => {
-            const { currentUser } = firebase.auth()
-            const fields = JSON.parse(JSON.stringify(moodFieldsJson))
-            const editedMood = this.props.navigation.state.params.editedMood
-            const oldMood = editedMood
-            const editedMoodId = editedMood.id
-            delete editedMood['id']
+        const { currentUser } = firebase.auth()
+        const fields = JSON.parse(JSON.stringify(moodFieldsJson))
+        const editedMood = this.props.editedMood
+        const editedMoodId = editedMood.id
+        delete editedMood['id']
 
-            for (const subject in fields) {
-                if (fields[subject].fields) {
-                    Object.keys(fields[subject].fields).map((field) => {
-                        fields[subject].fields[field].value = editedMood[field];
-                    })
-                }
+        for (const subject in fields) {
+            if (fields[subject].fields) {
+                Object.keys(fields[subject].fields).map((field) => {
+                    fields[subject].fields[field].value = editedMood[field];
+                })
             }
+        }
 
-            editedMood['user'] = currentUser.uid // add current user as owner for this new editedMood
-            this.setState({ fields, editedMood, currentUser, editedMoodId, oldMood })
-        });
-    }
-  
-    componentWillUnmount() {
-        this._unsubscribe();
+        this.setState({ fields, editedMood, currentUser, editedMoodId })
     }
 
     /**
@@ -67,6 +60,20 @@ export default class EditMoodPage extends Component {
             })
         }).catch(function(error) {
             console.log('ERROR:', error)
+        });
+    }
+
+    /**
+     * Go back to SingleMoodPage with unedited data from firestore
+     * since user doesn't save changes in this form if they click back button.
+     */
+    async goBack() {
+        await firebase.firestore().collection("moods").doc(this.state.editedMoodId).get().then((doc) => {
+            const mood = doc.data()
+            mood['id'] = doc.id
+            this.props.openMood(mood)
+        }).catch(function(error) {
+            console.log('Error finding mood by document id:', error)
         });
     }
 
@@ -86,7 +93,7 @@ export default class EditMoodPage extends Component {
                     <Form style={styles.form}>
                         <TouchableOpacity 
                         style={styles.backButton}
-                        onPress={() => this.props.navigation.navigate('SingleMoodPage', {singleMood: this.state.oldMood})} 
+                        onPress={() => this.goBack()} 
                         >
                             <Text><Icon type="FontAwesome5" name="chevron-left" /> Back</Text>
                         </TouchableOpacity>

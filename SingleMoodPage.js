@@ -140,22 +140,20 @@ class SingleMoodPage extends Component {
     }
 
     openEditPage() {
-        this.props.navigation.navigate('EditMoodPage', {editedMood: this.state.singleMood})
+        this.props.openEditMood(this.state.singleMood)
     }
 
     async deleteMood() {
         const user = this.state.currentUser
         const singleMood = this.state.singleMood
         const ref = firebase.firestore().collection("moods").where("user", "==", user.uid)
-        const navigation = this.props.navigation
+        const props = this.props
         
         await ref.get().then(function(q) {
             q.forEach(function(doc) {
                 if (doc.id == singleMood.id) {
                     doc.ref.delete()
-                    navigation.navigate('Home', {
-                        onGoBack: () => console.log('Going back')
-                    })
+                    props.setActiveTab('moods')
                 }
             });
         }).catch(function(error) {

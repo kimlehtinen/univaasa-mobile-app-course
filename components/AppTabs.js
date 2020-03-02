@@ -4,6 +4,7 @@ import { Content, Footer, FooterTab, Button, Text, Icon, Spinner } from 'native-
 import Moods from './Moods'
 import NewMood from './NewMood'
 import SingleMoodPage from '../SingleMoodPage'
+import EditMoodPage from '../EditMoodPage'
 import firebase from 'react-native-firebase'
 
 export default class AppTabs extends Component {
@@ -11,7 +12,8 @@ export default class AppTabs extends Component {
     selectedTab: 'moods', // default tab
     moods: null,
     isLoading: false,
-    singleMood: null
+    singleMood: null,
+    editMood: null
   }
 
   /**
@@ -37,6 +39,17 @@ export default class AppTabs extends Component {
           <SingleMoodPage 
           singleMood={this.state.singleMood}
           setActiveTab={this.setActiveTab.bind(this)}
+          openEditMood={this.openEditMood.bind(this)}
+          />
+        );
+      case 'editmood':
+        return (
+          this.state.editMood && 
+          <EditMoodPage 
+          editedMood={this.state.editMood}
+          uneditedMood={this.state.editMood}
+          setActiveTab={this.setActiveTab.bind(this)}
+          openMood={this.openMood.bind(this)}
           />
         );
         break;
@@ -57,6 +70,12 @@ export default class AppTabs extends Component {
     const singleMood = mood
     this.setState({singleMood})
     this.setActiveTab('singlemood')
+  }
+
+  openEditMood(mood) {
+    const editMood = mood
+    this.setState({editMood})
+    this.setActiveTab('editmood')
   }
 
   componentDidMount() {
@@ -91,7 +110,8 @@ export default class AppTabs extends Component {
   }
 
   hideTabs() {
-    return this.state.selectedTab === 'singlemood'
+    hideTabsPages = ['singlemood', 'editmood']
+    return hideTabsPages.indexOf(this.state.selectedTab) !== -1
   }
 
   render() {
