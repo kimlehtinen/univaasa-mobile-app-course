@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BackHandler, StyleSheet, TouchableOpacity } from 'react-native'
 import { H2, Item, Button, Label, Card, CardItem, Text, Icon, Left, Body } from 'native-base'
-import { withNavigation, StackActions, NavigationActions } from 'react-navigation'
+import { withNavigation } from 'react-navigation'
 import moodFieldsJson from './assets/moodFields.json'
 import firebase from 'react-native-firebase'
 
@@ -38,6 +38,9 @@ class SingleMoodPage extends Component {
         this.setState({ fields, singleMood, currentUser })
     }
     
+    /**
+     * Go back handler for hardware back button
+     */
     hardwareBackButtonClick = () => {
         this.goBack();
         return true;

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native'
+import { BackHandler, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native'
 import { Form, Spinner, Button, Text, Icon } from 'native-base'
 import moodFieldsJson from './assets/moodFields.json'
 import NewMoodSubject from './components/NewMoodSubject'
 import firebase from 'react-native-firebase'
-import AsyncStorage from '@react-native-community/async-storage'
 
 export default class EditMoodPage extends Component {
 
@@ -18,10 +17,12 @@ export default class EditMoodPage extends Component {
             isLoading: false,
             editedMoodId: null
         }
+
+        this.hardwareBackButtonClick = this.hardwareBackButtonClick.bind(this);
     }
 
     /**
-     * Update value for a form field
+     * Update value for a form field when editing mood
      * 
      * @param {string} field 
      * @param {any} value 
@@ -47,7 +48,20 @@ export default class EditMoodPage extends Component {
             }
         }
 
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.hardwareBackButtonClick);
         this.setState({ fields, editedMood, currentUser, editedMoodId })
+    }
+
+    /**
+     * Go back handler for hardware back button
+     */
+    hardwareBackButtonClick = () => {
+        this.goBack();
+        return true;
+    }
+    
+    componentWillUnmount() {
+        this.backHandler.remove()
     }
 
     /**
