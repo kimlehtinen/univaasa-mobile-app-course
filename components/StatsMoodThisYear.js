@@ -130,7 +130,8 @@ class StatsMoodThisYear extends React.Component {
                 <View>
                     <Text>
                         Overall mood per year (avg) 
-                        {this.state.selectedYear && this.state.years && <Picker
+                    </Text>
+                    {this.state.selectedYear && this.state.years && <Picker
                             note
                             mode="dropdown"
                             style={{ width: 120 }}
@@ -148,8 +149,7 @@ class StatsMoodThisYear extends React.Component {
                                     )
                                 })
                             }
-                        </Picker>}
-                    </Text>
+                    </Picker>}
                     
                     {/* 
                         Linechart example from https://www.npmjs.com/package/react-native-chart-kit 
@@ -195,11 +195,9 @@ class StatsMoodThisYear extends React.Component {
             return (
                 <View>
                     <Text>
-                        Overall mood this year (avg) 
+                        Overall mood per year (avg) 
                     </Text>
-                    <Text>
-                        No data to show for selected year
-                        {this.state.selectedYear && this.state.years && <Picker
+                    {this.state.selectedYear && this.state.years && <Picker
                             note
                             mode="dropdown"
                             style={{ width: 120 }}
@@ -217,7 +215,9 @@ class StatsMoodThisYear extends React.Component {
                                     )
                                 })
                             }
-                        </Picker>}
+                    </Picker>}
+                    <Text>
+                        No data to show for selected year
                     </Text>
                 </View>
             )
