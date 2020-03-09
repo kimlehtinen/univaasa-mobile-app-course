@@ -12,13 +12,31 @@ class Moods extends React.Component {
         currentUser: null,
         moods: null,
         isLoading: false,
-        showModal: false
+        showModal: false,
+        markedDates: null,
     }
 
     componentDidMount() {
         this.state.moods = this.props.moods
         const { currentUser } = firebase.auth()
+        this.setMarkedDates(this.props.moods)
         this.setState({ currentUser })
+    }
+
+    setMarkedDates(moods) {
+        if (!(moods && moods.length)) {
+            return
+        }
+
+        const markedDates = {}
+        for (const mood of moods) {
+            let moodDate = new Date(mood.date.toDate())
+            moodDate = new Date( new Date(moodDate).setHours(15,0,0,0))
+            moodDate = moodDate.toISOString().split('T')[0]
+            markedDates[moodDate] = {selected: true, marked: true, selectedColor: 'blue'}
+        }
+
+        this.setState({ markedDates })
     }
 
     openMood(mood) {
@@ -75,14 +93,9 @@ class Moods extends React.Component {
                 swipeDirection="right"
                 >
                     <View style={{ flex: 1 }}>
-                        <Calendar
-                            markedDates={{
-                                '2012-05-16': {selected: true, marked: true, selectedColor: 'blue'},
-                                '2012-05-17': {marked: true},
-                                '2012-05-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-                                '2012-05-19': {disabled: true, disableTouchEvent: true}
-                            }}
-                        />
+                        {this.state.markedDates && <Calendar
+                            markedDates={this.state.markedDates}
+                        />}
                     </View> 
                 </Modal>
 
