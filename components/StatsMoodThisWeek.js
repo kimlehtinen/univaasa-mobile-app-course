@@ -78,7 +78,7 @@ class StatsMoodThisWeek extends React.Component {
                         datasets: this.state.thisWeekOverallMoodData
                     }   
                 }
-                width={Dimensions.get('window').width}
+                width={Dimensions.get('window').width-18}
                 height={220}
                 yAxisLabel=""
                 chartConfig={
