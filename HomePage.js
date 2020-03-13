@@ -61,7 +61,7 @@ export default class HomePage extends React.Component {
                 </Button>
               </Left>
               <Body>
-                <Title>Mood</Title>
+                <Title>Daily Mood</Title>
               </Body>
               <Right />
             </Header>

@@ -55,6 +55,26 @@ class Moods extends React.Component {
         })
     }
 
+    /**
+     * Select mood by date from calender
+     * 
+     * @param {*} day 
+     */
+    selectMoodByDate(day) {
+        if (day && day.dateString && this.state.moods && this.state.moods.length) {
+            for (const mood of this.state.moods) {
+                const moodDate = new Date(mood.date.toDate())
+                const selectedDate = new Date(day.dateString)
+
+                if (moodDate.toDateString() === selectedDate.toDateString()) {
+                    this.closeMoodCalendar()
+                    this.openMood(mood)
+                    return
+                }
+            }
+        }
+    }
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -93,9 +113,12 @@ class Moods extends React.Component {
                 swipeDirection="right"
                 >
                     <View style={{ flex: 1 }}>
-                        {this.state.markedDates && <Calendar
+                        {this.state.markedDates && 
+                        <Calendar
                             markedDates={this.state.markedDates}
-                        />}
+                            onDayPress={(day) => this.selectMoodByDate(day)}
+                        />
+                        }
                     </View> 
                 </Modal>
 
