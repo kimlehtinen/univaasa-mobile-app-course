@@ -129,7 +129,7 @@ class StatsMoodThisYear extends React.Component {
             return (
                 <View>
                     <Text>
-                        Overall mood per year (avg) 
+                        Overall mood per year avg (5 = best, 1 = worst)
                     </Text>
                     {this.state.selectedYear && this.state.years && <Picker
                             note

@@ -65,7 +65,7 @@ class StatsMoodThisWeek extends React.Component {
         const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         return (
             <View style={styles.statsContainer}>
-                <Text>Overall mood this week</Text>
+                <Text>Overall mood this week (5 = best, 1 = worst)</Text>
 
                 {/* 
                     Linechart example from https://www.npmjs.com/package/react-native-chart-kit 
