@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import firebase from 'react-native-firebase'
-import { AppRegistry, Image, StatusBar } from 'react-native'
 import {
   Button,
   Text,
@@ -9,10 +8,21 @@ import {
   List,
   ListItem,
   Content,
-  Icon
+  Icon,
+  Left,
+  Body
 } from "native-base";
 
 export default class SideBar extends React.Component {
+    state = {
+        currentUser: null
+    }
+
+    componentDidMount() {
+        const { currentUser } = firebase.auth()
+        this.setState({ currentUser })
+    }
+
     /**
      * Logs out signed in user
      */
@@ -39,11 +49,21 @@ export default class SideBar extends React.Component {
                 <Text>X</Text>
                 </Button>
                 <List>
-                    <ListItem
-                    button
-                    onPress={() => this.props.navigation.navigate('Home')}
-                    >
-                    <Text>Home</Text>
+                    <ListItem icon style={styles.userEmail}>
+                    <Left>
+                        <Icon 
+                        type="FontAwesome" 
+                        name="user" 
+                        />
+                    </Left>
+                    <Body>
+                    {
+                        this.state.currentUser && 
+                        <Text>
+                            {this.state.currentUser.email}
+                        </Text>
+                    }
+                    </Body>
                     </ListItem>
                     <ListItem
                     button
@@ -59,6 +79,13 @@ export default class SideBar extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    userEmail: {
+        marginTop: 40,
+        marginBottom: 20
+    },
+    userIcon: {
+        marginRight: 10
+    },
     sidebarContent: {
         flexDirection: 'column', 
         flex: 1
