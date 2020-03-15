@@ -7,7 +7,8 @@ import firebase from 'react-native-firebase'
 
 class SingleMoodPage extends Component {
     /*
-        Page Single Mood 
+        Page for displaying a single mood with its data.
+        User can edit or delete mood from this page. 
     */
 
     constructor(props) {
@@ -24,12 +25,18 @@ class SingleMoodPage extends Component {
     }
 
     componentDidMount() {
+        // get current user
         const { currentUser } = firebase.auth()
+        
+        // show every mood field except date and overall feeling
+        // because they are shown manually, all others are show automatically
+        // using moodFieldsJson config file
         const fields = JSON.parse(JSON.stringify(moodFieldsJson))
         delete fields["dates"]
         delete fields["overAllFeeling"]
         let singleMood = this.props.singleMood
 
+        // get mood data
         if (this.props.navigation.state.singleMood) {
             singleMood = this.props.navigation.state.singleMood
         }
@@ -142,10 +149,16 @@ class SingleMoodPage extends Component {
         return <Text>{radioButtonOption.text}</Text>
     }
 
+    /**
+     * Tell app tabs to display edit mood page
+     */
     openEditPage() {
         this.props.openEditMood(this.state.singleMood)
     }
 
+    /**
+     * Delete mood from firestore
+     */
     async deleteMood() {
         const user = this.state.currentUser
         const singleMood = this.state.singleMood
@@ -164,6 +177,9 @@ class SingleMoodPage extends Component {
         });
     }
 
+    /**
+     * Go back to moods page
+     */
     async goBack() {
         this.props.setActiveTab('moods')
     }

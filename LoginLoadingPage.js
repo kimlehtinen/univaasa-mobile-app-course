@@ -4,7 +4,13 @@ import firebase from 'react-native-firebase'
 import { Spinner } from 'native-base'
 
 export default class LoginLoadingPage extends React.Component {
+    /*
+    Loading page that is shown while logging in
+    */
+
     componentDidMount() {
+        // go to dashboard page (Home) if already logged in
+        // if not logged in, got to LoginPage
         firebase.auth().onAuthStateChanged(user => {
             let nextPage = user ? 'Home' : 'LoginPage'
             this.props.navigation.navigate(nextPage)

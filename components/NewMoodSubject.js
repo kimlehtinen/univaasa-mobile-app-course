@@ -14,6 +14,7 @@ export default class NewMoodSubject extends Component {
 
     /**
      * Pass subject child field value to parent component NewMood
+     *
      * @param {string} field 
      * @param {any} value 
      */

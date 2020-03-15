@@ -19,6 +19,7 @@ export default class SideBar extends React.Component {
     }
 
     componentDidMount() {
+        // get current user details from firebase auth
         const { currentUser } = firebase.auth()
         this.setState({ currentUser })
     }

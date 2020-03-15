@@ -44,6 +44,9 @@ class MoodTeaser extends React.Component {
         return new Date() === new Date(moodDate.toDate())
     }
 
+    /**
+     * Tell parent component to display single mood page
+     */
     openMood() {
         this.props.openMood(this.props.moodTeaser)
     }

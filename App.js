@@ -10,6 +10,9 @@ import EditMoodPage from './EditMoodPage'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import SideBar from './components/Sidebar'
 
+/*
+Possible screens to be shown
+*/
 
 const App = createDrawerNavigator(
   {

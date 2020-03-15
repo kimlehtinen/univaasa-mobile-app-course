@@ -17,6 +17,11 @@ import {
 } from 'native-base'
 
 export default class RegisterPage extends React.Component {
+    /*
+    Application register page.
+    User can sign up using firebase, email and password.
+    */
+
     state = { 
         email: '', 
         password: '', 

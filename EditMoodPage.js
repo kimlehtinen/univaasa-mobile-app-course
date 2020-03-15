@@ -7,6 +7,10 @@ import firebase from 'react-native-firebase'
 
 export default class EditMoodPage extends Component {
 
+    /*
+    Page with a form to edit a mood
+    */
+
     constructor(props) {
         super(props)
 
@@ -34,12 +38,16 @@ export default class EditMoodPage extends Component {
     }
 
     componentDidMount() {
+        // get current user
         const { currentUser } = firebase.auth()
+        // get mood fields to be shown in form
         const fields = JSON.parse(JSON.stringify(moodFieldsJson))
+        // get mood from parent that should be edited with its current data
         const editedMood = this.props.editedMood
         const editedMoodId = editedMood.id
         delete editedMood['id']
 
+        // replace each form field value with current mood data values
         for (const subject in fields) {
             if (fields[subject].fields) {
                 Object.keys(fields[subject].fields).map((field) => {

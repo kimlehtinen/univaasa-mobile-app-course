@@ -17,6 +17,11 @@ import {
 } from 'native-base'
 
 export default class LoginPage extends React.Component {
+    /*
+    Application login page.
+    User can login using firebase, email and password.
+    */
+
     state = { 
         email: '', 
         password: '', 

@@ -9,6 +9,11 @@ import Stats from './Stats'
 import firebase from 'react-native-firebase'
 
 export default class AppTabs extends Component {
+  /*
+    Component that displays application tabs.
+    Decides what page is shown.
+  */
+
   state = { 
     selectedTab: 'moods', // default tab
     moods: null,

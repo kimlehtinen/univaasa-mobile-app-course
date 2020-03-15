@@ -8,6 +8,10 @@ import {
   } from 'react-native-chart-kit'
 
 class StatsMoodThisWeek extends React.Component {
+    /*
+    Show overall mood stats for current week
+    */
+
     state = { 
         currentUser: null,
         moods: null,
@@ -16,23 +20,34 @@ class StatsMoodThisWeek extends React.Component {
     }
 
     componentDidMount() {
+        // show loading spinner
         let isLoading = true;
         this.setState({ isLoading })
-        
+        // get moods from parent component to calculate stats
         const moods = this.props.moods
+        // get current user
         const { currentUser } = firebase.auth()
+        // hide loading spinner
         isLoading = false
+        // get processed data to display overall mood for current week
         const thisWeekOverallMoodData = this.thisWeekOverallMoodData(moods)
         this.setState({ currentUser, moods, thisWeekOverallMoodData, isLoading })
     }
 
+    /**
+     * Calculate overall mood for each day current week
+     * 
+     * @param {*} moods 
+     */
     thisWeekOverallMoodData(moods) {
         this.setState({ isLoading: true })
 
         const today = new Date(new Date().setHours(0,0,0,0))
         const dayNow = today.getDay()
         const daysDiff = dayNow == 0 ? 6 : dayNow - 1
+        // this week starts
         const weekStarts = new Date(new Date(today).setDate(today.getDate() - daysDiff))
+        // this week ends
         let weekEnds = new Date(new Date(weekStarts).setDate(weekStarts.getDate() + 6))
         weekEnds = new Date(weekEnds.setHours(23, 59, 59, 999))
         
@@ -40,6 +55,7 @@ class StatsMoodThisWeek extends React.Component {
         for (const mood of moods) {
             // check if date is this week
             const moodDate = new Date(mood.date.toDate())
+            // check if mood date belongs to current week
             if (moodDate >= weekStarts && moodDate <= weekEnds) {
                 dayOfWeek = new Date(mood.date.toDate()).getDay()
                 data[dayOfWeek-1] = mood.overall_mood

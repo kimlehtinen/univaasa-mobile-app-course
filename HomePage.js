@@ -21,6 +21,10 @@ import {
 } from 'native-base'
 
 export default class HomePage extends React.Component {
+    /*
+    Application Dashboard page
+    */
+
     state = { 
         user: null
     }
@@ -28,15 +32,6 @@ export default class HomePage extends React.Component {
     componentDidMount() {
         const { currentUser } = firebase.auth()
         this.setState({ currentUser })
-    }
-
-    logOut = async () => {
-        try {
-            await firebase.auth().signOut()
-            this.props.navigation.navigate('LoginPage')
-        } catch (e) {
-            console.log(e);
-        }
     }
 
     render() {

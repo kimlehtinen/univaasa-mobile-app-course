@@ -18,13 +18,20 @@ class StatsMoodThisYear extends React.Component {
     }
 
     componentDidMount() {
+        // show loading spinner
         let isLoading = true;
+        // get current year
         const selectedYear = new Date().getFullYear()
         this.setState({ selectedYear, isLoading })
+        // create year picker items
         this.setYearPickerItems()
+        // get moods from parent component
         const moods = this.props.moods
+        // get current user
         const { currentUser } = firebase.auth()
+        // hide spinner
         isLoading = false
+        // process stats data
         const thisYearOverallMoodData = this.thisYearOverallMoodData(moods, selectedYear)
         this.setState({ 
             currentUser, 
@@ -34,6 +41,11 @@ class StatsMoodThisYear extends React.Component {
         })
     }
 
+    /**
+     * Update stats on year picker value change
+     * 
+     * @param {*} value 
+     */
     onYearChange(value) {
         this.setState({
           selectedYear: parseInt(value),
@@ -45,13 +57,21 @@ class StatsMoodThisYear extends React.Component {
         this.setState({ thisYearOverallMoodData, isLoading: false })
     }
 
+    /**
+     * Process overall mood data for selected year (current year by default)
+     * 
+     * @param {*} moods 
+     * @param {*} year 
+     */
     thisYearOverallMoodData(moods, year) {
         this.setState({ isLoading: true })
+        // months in a year
         const monthNames = [ 'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December' ]
         const listOfMonthsAvg = []
         const currentYear = year
 
+        // initialize properties for each month
         for (const name of monthNames) {
             listOfMonthsAvg.push({
                 name, 
@@ -61,6 +81,7 @@ class StatsMoodThisYear extends React.Component {
             })
         }
 
+        // calculate average overall mood for each month
         for (const mood of moods) {
             const moodDate = new Date(mood.date.toDate())
             const moodMonthIndex = moodDate.getMonth()
@@ -75,6 +96,7 @@ class StatsMoodThisYear extends React.Component {
             }
         }
 
+        // month labels for graph
         const labels = []
         const data = []
         let dataExists = false
@@ -99,6 +121,9 @@ class StatsMoodThisYear extends React.Component {
         }]
     }
 
+    /**
+     * Create a year picker from current year - 1970
+     */
     setYearPickerItems() {
         let currentYear = new Date().getFullYear()
         const years = [currentYear]

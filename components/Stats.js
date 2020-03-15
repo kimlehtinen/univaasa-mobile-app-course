@@ -15,11 +15,17 @@ import StatsMoodThisWeek from './StatsMoodThisWeek'
 import StatsMoodThisYear from './StatsMoodThisYear'
 
 class Stats extends React.Component {
+    /*
+    A page that shows stats about user moods
+    */
+
     state = { 
         moods: null
     }
 
     componentDidMount() {
+        // get moods from parent component that will be used for stats
+        // and passed to stats child components
         const moods = this.props.moods
         this.setState({ moods })
     }

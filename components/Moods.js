@@ -8,6 +8,10 @@ import Modal from 'react-native-modal'
 import { Calendar } from 'react-native-calendars'
 
 class Moods extends React.Component {
+    /*
+     A page that displays all moods
+    */
+
     state = { 
         currentUser: null,
         moods: null,
@@ -17,18 +21,30 @@ class Moods extends React.Component {
     }
 
     componentDidMount() {
+        // get moods from parent component that were fetched from firestore
         this.state.moods = this.props.moods
+        // get current user details
         const { currentUser } = firebase.auth()
+        // set marked dates that will be used in Calendar
         this.setMarkedDates(this.props.moods)
+
         this.setState({ currentUser })
     }
 
+    /**
+     * Collect marked dates that will be used and displayed in a Calendar
+     * so that user can find mood by date.
+     * 
+     * @param {*} moods 
+     */
     setMarkedDates(moods) {
+        // check if mood exists
         if (!(moods && moods.length)) {
             return
         }
 
         const markedDates = {}
+        // set each mood date in correct format to be displayed in Calendar
         for (const mood of moods) {
             let moodDate = new Date(mood.date.toDate())
             moodDate = new Date( new Date(moodDate).setHours(15,0,0,0))
@@ -39,16 +55,27 @@ class Moods extends React.Component {
         this.setState({ markedDates })
     }
 
+    /**
+     * Tell AppTabs component to display single mood page
+     * 
+     * @param {*} mood 
+     */
     openMood(mood) {
         this.props.openMood(mood)
     }
 
+    /**
+     * Show calendar with marked mood dates
+     */
     openMoodCalendar() {
         this.setState({
             showModal: true
         })
     }
     
+    /**
+     * Hide calendar with marked mood dates
+     */
     closeMoodCalendar() {
         this.setState({
             showModal: false

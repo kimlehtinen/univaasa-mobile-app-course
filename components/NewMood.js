@@ -8,6 +8,10 @@ import { withNavigation } from 'react-navigation'
 
 class NewMood extends Component {
 
+    /*
+    Form for creating a new Mood
+    */
+
     constructor(props) {
         super(props)
 
