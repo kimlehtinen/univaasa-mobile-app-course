@@ -32,12 +32,23 @@ export default class LoginPage extends React.Component {
      * Login user using firebase with given email and password
      */
     loginUser = () => {
+        if (this.state.email == '' || this.state.password == '') {
+            console.log('Missing data')
+            this.setState({ authError: 'Email or password is missing' })
+            return
+        }
+
         const { email, password } = this.state
         firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then(() => this.props.navigation.navigate('HomePage'))
-          .catch(error => this.setState({ authError: error.message }))
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then(() => {
+                this.props.navigation.navigate('Home')
+            })
+            .catch(error => {
+                console.log('ERROR:', error)
+                this.setState({ authError: error.message })
+            })
     }
 
     render() {
