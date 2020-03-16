@@ -106,10 +106,61 @@ Mood2Day is built using React Native, which is based on JavaScript. Therefore, i
 <img src="assets/app-images/editmood.JPG" />
 
 ## 3.2 Hardware Interfaces ##
+Android or iOS phone
+
 ## 3.3 Software Interfaces ##
+- Node.js https://nodejs.org/en/
+- react-native-cli https://www.npmjs.com/package/react-native-cli
+
 ## 3.4 Communication Interfaces ##
+- Internet connection for authentication to work,
 
 # 4 System Features #
+
+## 4.1 Registration
+<div>
+For the application to work, the user must register a new account. User credentials are stored in Firebase.
+</div>
+<img src="assets/app-images/register.JPG" />
+
+## 4.2 Login
+<div>
+When user has a registered user account, they can login. Login happens using Firebase.
+</div>
+<img src="assets/app-images/login.JPG" />
+
+## 4.3 Creating a new mood
+<div>
+User can create a new mood, which means that they store information about a day. They say what the overall mood was on that day, what hobbies and activities they did and write a note for that day. When fields have been filled, user can finally submit the form. When form is submitted, the data is sent to Firestore database where mood for a specific date is stored. If user tries to store a new mood on same date as a previous mood, the newest one is kept and the old one is deleted. It only makes sense to have one mood for each day.
+</div>
+<div>
+New mood fields 1/3
+</div>
+<img src="assets/app-images/newmood.JPG" />
+<div>
+New mood fields 2/3
+</div>
+<img src="assets/app-images/newmood2.JPG" />
+<div>
+New mood fields 3/3
+</div>
+<img src="assets/app-images/newmood3.JPG" />
+
+## 4.4 Moods
+<div>
+The first page shown when logged in is "Moods" page.
+</div>
+<img src="assets/app-images/moods.JPG" />
+
+<div>
+For finding a mood for a specific date, there is a calendar icon at the top of "Moods" page. When user clicks on this calendar icon, a modal with calendar is shown.
+</div>
+<img src="assets/app-images/moodswithcalendar.JPG" />
+
+<div>
+Calendar modal shows the dates when a mood has been added. When user presses on a date with a mood, user is taken to "Single Mood Page" that shows more details about that day.
+</div>
+<img src="assets/app-images/moodswithcalendar2.JPG" />
 
 # 5. Nonfunctional Requirements #
 ## 5.1 Performance Requirements ##
