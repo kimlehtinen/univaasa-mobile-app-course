@@ -83,8 +83,27 @@ Mood2Day is built using React Native, which is based on JavaScript. Therefore, i
 # 3 External Interface Requirements #
 
 ## 3.1 User Interfaces ##
-1. Moods Page/Tab:
+
+### 1. Login Page:
+<img src="assets/app-images/login.JPG" />
+
+### 2. Register Page:
+<img src="assets/app-images/register.JPG" />
+
+### 3. Moods Page/Tab:
 <img src="assets/app-images/moods.JPG" />
+
+### 4. New mood Page/Tab:
+<img src="assets/app-images/newmood.JPG" />
+
+### 5. Stats Page/Tab:
+<img src="assets/app-images/stats.JPG" />
+
+### 6. Single Mood:
+<img src="assets/app-images/singlemood.JPG" />
+
+### 7. Edit Mood:
+<img src="assets/app-images/editmood.JPG" />
 
 ## 3.2 Hardware Interfaces ##
 ## 3.3 Software Interfaces ##
