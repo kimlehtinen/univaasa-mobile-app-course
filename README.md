@@ -231,12 +231,10 @@ In addition, user can see average overall mood per month for selected year. Usin
 Mood2Day requires a smartphone with either a Android or iOS operating system.
 
 ## 5.2 Safety Requirements ##
-
+Anyone can use this application.
 
 ## 5.3 Security Requirements ##
+There are no particular security requirements. User should think about creating a secure password.
+
 ## 5.4 Software Quality Attributes ##
-## 5.5 Business Rules ##
-
-# 6 Other Requirements #
-
-<!--appendix-->
+Mood2Day is easy to use, as long as the user understands english. This mobile application uses minimal and simple design, where data is easily accessible, pages are easy to find and actions are simple to perform.
