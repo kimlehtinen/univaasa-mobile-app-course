@@ -133,6 +133,7 @@ When user has a registered user account, they can login. Login happens using Fir
 <div>
 User can create a new mood, which means that they store information about a day. They say what the overall mood was on that day, what hobbies and activities they did and write a note for that day. When fields have been filled, user can finally submit the form. When form is submitted, the data is sent to Firestore database where mood for a specific date is stored. If user tries to store a new mood on same date as a previous mood, the newest one is kept and the old one is deleted. It only makes sense to have one mood for each day.
 </div>
+<br/>
 <div>
 New mood fields 1/3
 </div>
@@ -161,6 +162,22 @@ For finding a mood for a specific date, there is a calendar icon at the top of "
 Calendar modal shows the dates when a mood has been added. When user presses on a date with a mood, user is taken to "Single Mood Page" that shows more details about that day.
 </div>
 <img src="assets/app-images/moodswithcalendar2.JPG" />
+
+## 4.5 Single Mood
+<div>
+A single mood can be displayed, when clicking on a Mood teaser on "Moods" page (first page). On this page, the user can see all the mood details for a specific day. Also on this page, the user can choose to either update the mood details for that day, or choose to delete the mood. If deleted, the mood is deleted from Firestore cloud database.
+</div>
+<br/>
+<div>Single Mood Page</div>
+<img src="assets/app-images/singlemood.JPG" />
+
+## 4.6 Edit Mood
+<div>
+If user clicked the "update" button on Single Mood Page, they are taken to this page. This page is form similar to "New mood" page, where the form is prefilled with current mood data, and lets the user update this data by saving the form.
+</div>
+<br />
+<div>Edit Mood Page</div>
+<img src="assets/app-images/editmood.JPG" />
 
 # 5. Nonfunctional Requirements #
 ## 5.1 Performance Requirements ##
