@@ -78,7 +78,7 @@ React Native, which is a cross platform mobile application framework, is used to
 Wiki?
 
 ## 2.7 Assumptions and Dependencies ##
-Mood2Day is built using React Native, which is based on JavaScript. Therefore, it requires Node.js and react-native to be installed for building the application.
+Mood2Day is built using React Native, which is based on JavaScript. Therefore, it requires Node.js and react-native to be installed for building the application. For running the application on emulators, developer sould also install React Native CLI, Android Studio and Java Development Kit for running on Android.
 
 ## 2.8 Authentication
 <div>
@@ -147,6 +147,8 @@ Android or iOS phone
 ## 3.3 Software Interfaces ##
 - Node.js https://nodejs.org/en/
 - react-native-cli https://www.npmjs.com/package/react-native-cli
+- Android Studio https://developer.android.com/studio/
+- Java Development Kit
 
 ## 3.4 Communication Interfaces ##
 - Internet connection for authentication to work,
