@@ -8,22 +8,25 @@ Prepared by Kim Lehtinen
 
 # 1 Introduction #
 
-## 1.1 Purpose ##
+## 1.1 Installation ##
+Installation instructions can be found here https://github.com/kim3z/univaasa-mobile-app-course/blob/master/INSTALLATION.md
+
+## 1.2 Purpose ##
 This is a Software Requirements Specification for the mobile application Mood2Day.
 
-## 1.2 Document Conventions ##
+## 1.3 Document Conventions ##
 This SRS document is based on wontons SRS template that can be found here https://github.com/wontonst/system-requirements-specification-markdown-srs-md/blob/master/srs.md . Wonton's template on the other hand, is based on Institute of Electrical and Electronics Engineers (IEEE) System Requirements Specifications (SRS).
 
-## 1.3 Glossary
+## 1.4 Glossary
 Explain words and terms
 
-## 1.4 Intended Audience and Reading Suggestions ##
+## 1.5 Intended Audience and Reading Suggestions ##
 Normal users that want to keep track of how they feel during a day.
 
-## 1.5 Product Scope ##
+## 1.6 Product Scope ##
 Mood2Day is a mobile application that anyone can use to keep track of their mood and accomplishments for each day. They can also see statistics for current week, and also for each year.
 
-## 1.6 References ##
+## 1.7 References ##
 Mood2Day website:
 https://kim3z.github.io/univaasa-mobile-app-course/
 
