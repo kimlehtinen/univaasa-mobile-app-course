@@ -179,6 +179,17 @@ If user clicked the "update" button on Single Mood Page, they are taken to this 
 <div>Edit Mood Page</div>
 <img src="assets/app-images/editmood.JPG" />
 
+
+## 4.7 Stats
+<div>
+Stats is a page with statistics about the user's overall mood. Here, user can see overall mood for each day for current week.
+</div>
+<br />
+<div>
+In addition, user can see average overall mood per month for selected year. Using a year picker, user can change to show same data for an other year.
+</div>
+<img src="assets/app-images/stats.JPG" />
+
 # 5. Nonfunctional Requirements #
 ## 5.1 Performance Requirements ##
 ## 5.2 Safety Requirements ##
