@@ -15,7 +15,7 @@ I recommend this guide for setting up Windows Development Environment https://co
 
 ```
 # clone the repository
-https://github.com/kim3z/univaasa-mobile-app-course.git
+git clone https://github.com/kim3z/univaasa-mobile-app-course.git
 
 # cd into source
 cd univaasa-mobile-app-course
