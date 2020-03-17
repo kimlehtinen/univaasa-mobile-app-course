@@ -80,6 +80,42 @@ Wiki?
 ## 2.7 Assumptions and Dependencies ##
 Mood2Day is built using React Native, which is based on JavaScript. Therefore, it requires Node.js and react-native to be installed for building the application.
 
+## 2.8 Authentication
+<div>
+Firebase is used for authenticating users. When registering to this application, user gives email and password so that we can sign them up to firebase. Only email authentication is enabled, and user's password is encrypted.
+</div>
+<img src="assets/app-images/firebase_auth.JPG" />
+
+## 2.9 Storage
+<div>
+Firestore cloud NoSQL database is used for creating, updating, reading and deleting moods. This way a user's data is accessible through the internet, instead of storing data directly on device. This way, user can access data even when changing phones. In addition, this is good if Mood2Day ever creates a web application, where the same data needs to be accessed.
+</div>
+<br />
+<div>
+Since mood data is stored to Firestore, there are a few security rules accessing data. In order to create a mood, a user id needs to be given, so that we know who has created a mood. A more strict rule is set for read, update and delete, which are actions that require that the logged in user's id is the same as the resource (mood) user id in Firestore database.
+</div>
+
+``` 
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /moods/{moodid} {
+        
+        // read, update, delete rule
+        allow read, update, delete: if request.auth.uid == resource.data.user;
+        
+        // create mood rule
+        allow create: if request.auth.uid != null;
+    }
+  }
+}
+```
+
+<div>This what the database looks like in Firestore. We can see that NoSQL documents are stored in a collection called "moods".</div>
+<img src="assets/app-images/firebase_db.JPG" />
+<div>Here is how the schema for a mood looks like in more detail.</div>
+<img src="assets/app-images/firebase_db2.JPG" />
+
 # 3 External Interface Requirements #
 
 ## 3.1 User Interfaces ##
@@ -192,7 +228,11 @@ In addition, user can see average overall mood per month for selected year. Usin
 
 # 5. Nonfunctional Requirements #
 ## 5.1 Performance Requirements ##
+Mood2Day requires a smartphone with either a Android or iOS operating system.
+
 ## 5.2 Safety Requirements ##
+
+
 ## 5.3 Security Requirements ##
 ## 5.4 Software Quality Attributes ##
 ## 5.5 Business Rules ##
