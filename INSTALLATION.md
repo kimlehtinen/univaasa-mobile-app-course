@@ -49,5 +49,11 @@ cd ..
 # run again on android
 npm run android
 ```
+
+## Demo
+If you don't want to create a user, you can login with this demo user:
+- email: lehtinensolutions@gmail.com
+- password: foobar123
+
 ## Note
 If you search for the app on a phone or emulator, it's name is easyweatherapp because this application was first intended to be a weather app. After creating this project, the developer of this application came up with this application idea instead :)

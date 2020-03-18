@@ -196,7 +196,7 @@ For finding a mood for a specific date, there is a calendar icon at the top of "
 <div>
 Calendar modal shows the dates when a mood has been added. When user presses on a date with a mood, user is taken to "Single Mood Page" that shows more details about that day.
 </div>
-<img src="assets/app-images/moodswithcalendar2.JPG" />
+<img src="assets/app-images/moodswithcalendarbutton.JPG" />
 
 ## 4.5 Single Mood
 <div>
