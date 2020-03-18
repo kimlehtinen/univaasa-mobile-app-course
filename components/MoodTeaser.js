@@ -41,7 +41,11 @@ class MoodTeaser extends React.Component {
      * @return {boolean}
      */
     isMoodToday(moodDate) {
-        return new Date() === new Date(moodDate.toDate())
+        if ('toDate' in moodDate) {
+            return new Date(moodDate.toDate()) === new Date()    
+        }
+
+        return new Date(moodDate) === new Date()
     }
 
     /**
@@ -49,6 +53,13 @@ class MoodTeaser extends React.Component {
      */
     openMood() {
         this.props.openMood(this.props.moodTeaser)
+    }
+
+    renderDate(mood) {
+        if ('toDate' in mood.date) {
+            return new Date(mood.date.toDate()).toDateString()
+        }
+        return new Date(mood.date).toDateString()
     }
 
     render() {
@@ -61,7 +72,7 @@ class MoodTeaser extends React.Component {
                     <Left>
                         {this.teaserEmoji(moodTeaser.overall_mood)}
                         <Body>
-                            <Text>{new Date(moodTeaser.date.toDate()).toDateString()}</Text>
+                            <Text>{this.renderDate(moodTeaser)}</Text>
                             {this.isMoodToday(moodTeaser.date) && <Text note>TODAY</Text>}
                         </Body>
                     </Left>
