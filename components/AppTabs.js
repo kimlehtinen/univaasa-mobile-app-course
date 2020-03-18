@@ -37,7 +37,7 @@ export default class AppTabs extends Component {
         return (<NewMood setActiveTab={this.setActiveTab.bind(this)}/>);
         break;
       case 'stats':
-        return (<Stats moods={this.state.moods} />);
+        return (<Stats moods={this.state.moods} setActiveTab={this.setActiveTab.bind(this)} />);
         break;
       case 'singlemood':
         return (

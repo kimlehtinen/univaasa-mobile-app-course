@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { BackHandler, StyleSheet, View } from 'react-native'
 import { Form, Toast, Spinner, Button, Text } from 'native-base'
 import moodFieldsJson from '../assets/moodFields.json'
 import NewMoodSubject from './NewMoodSubject'
@@ -20,6 +20,8 @@ class NewMood extends Component {
             newMood: {},
             isLoading: false
         }
+
+        this.hardwareBackButtonClick = this.hardwareBackButtonClick.bind(this);
     }
 
     /**
@@ -42,7 +44,21 @@ class NewMood extends Component {
         this.initNewMood(fields) // initialize new mood state object
 
         newMood['user'] = currentUser.uid // add current user as owner for this new mood
+
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.hardwareBackButtonClick);
         this.setState({ fields, newMood, currentUser })
+    }
+
+    /**
+     * Go back handler for hardware back button
+     */
+    hardwareBackButtonClick = () => {
+        this.props.setActiveTab('moods')
+        return true;
+    }
+    
+    componentWillUnmount() {
+        this.backHandler.remove()
     }
 
     /**

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { BackHandler, View, StyleSheet, ScrollView } from 'react-native'
 import { Spinner, Button, Icon, Text } from 'native-base'
 import firebase from 'react-native-firebase'
 import MoodTeaser from './MoodTeaser'
@@ -12,12 +12,18 @@ class Moods extends React.Component {
      A page that displays all moods
     */
 
-    state = { 
-        currentUser: null,
-        moods: null,
-        isLoading: false,
-        showModal: false,
-        markedDates: null,
+    constructor(props) {
+        super(props)
+
+        this.state = { 
+            currentUser: null,
+            moods: null,
+            isLoading: false,
+            showModal: false,
+            markedDates: null,
+        }
+
+        this.hardwareBackButtonClick = this.hardwareBackButtonClick.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +34,20 @@ class Moods extends React.Component {
         // set marked dates that will be used in Calendar
         this.setMarkedDates(this.props.moods)
 
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.hardwareBackButtonClick);
         this.setState({ currentUser })
+    }
+
+    /**
+     * Go back handler for hardware back button
+     */
+    hardwareBackButtonClick = () => {
+        // stay on this page
+        return true;
+    }
+    
+    componentWillUnmount() {
+        this.backHandler.remove()
     }
 
     /**
