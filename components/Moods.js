@@ -146,6 +146,15 @@ class Moods extends React.Component {
                             onDayPress={(day) => this.selectMoodByDate(day)}
                         />
                         }
+                        <Button
+                        onPress={() => this.closeMoodCalendar()} 
+                        full primary rounded
+                        style={styles.closeCalendarButton}
+                        >
+                            <Text style={styles.closeCalendarText}>
+                                Close calendar
+                            </Text>
+                        </Button>
                     </View> 
                 </Modal>
 
@@ -181,5 +190,14 @@ const styles = StyleSheet.create({
         color: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    
+    closeCalendarButton: {
+        marginLeft: 5,
+        marginRight: 5
+    },
+    closeCalendarText: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

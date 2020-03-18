@@ -24,14 +24,15 @@ cd univaasa-mobile-app-course
 npm install
 ```
 
-## Run on Android emulator
+## Run on Android (Device or emulator)
+If you run on real device, you need to enable developer settings and usb debugging.
 
 ```
-# run on android emulator (requires Android Studio, Android emulator and JDK)
-react-native run-android
+# run on android
+npm run android
 ```
 
-Sometimes running on emulator stops working. If this happens, stop the `react-native run-android` process, and do this:
+Sometimes running on android stops working. If this happens, stop the `npm run android` process, and do this:
 ```
 # go to android directory
 cd android
@@ -45,23 +46,6 @@ cd android
 # go back to project root directory
 cd ..
 
-# run again on android emulator
-react-native run-android
-```
-
-## Build debug apk
-```
-# go to android directory
-cd android
-
-# build debug apk
-./gradlew assembleRelease
-
-# if previous command didn't work
-# try changing ./gradlew --> gradlew
-```
-
-Now you should find the apk here:
-```
-android/app/build/outputs/apk/debug/app-debug.apk
+# run again on android
+npm run android
 ```
