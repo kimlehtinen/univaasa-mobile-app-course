@@ -4,7 +4,7 @@ Version 1.0.0 approved
 
 Prepared by Kim Lehtinen
 
-16.3.2020
+18.3.2020
 
 # 1 Introduction #
 
@@ -12,21 +12,18 @@ Prepared by Kim Lehtinen
 Installation instructions can be found here https://github.com/kim3z/univaasa-mobile-app-course/blob/master/INSTALLATION.md
 
 ## 1.2 Purpose ##
-This is a Software Requirements Specification for the mobile application Mood2Day.
+This is a Software Requirements Specification for the mobile application Mood2Day. This application exists for those who want to keep track of their mood and what they have accomplished during a day. User can answer how the overall mood was a particular day, how well they have eaten, how well they have slept, what hobbies they have done, what kind of work they have done at home, and finally write a note for that day. The user can also follow up on different kind of statistics, and look back on previous days. The purpose of Mood2Day is for people to keep track of their mental health and days. Users can use this app, to achieve basic goals and strive for a better well-being.
 
 ## 1.3 Document Conventions ##
 This SRS document is based on wontons SRS template that can be found here https://github.com/wontonst/system-requirements-specification-markdown-srs-md/blob/master/srs.md . Wonton's template on the other hand, is based on Institute of Electrical and Electronics Engineers (IEEE) System Requirements Specifications (SRS).
 
-## 1.4 Glossary
-Explain words and terms
-
-## 1.5 Intended Audience and Reading Suggestions ##
+## 1.4 Intended Audience and Reading Suggestions ##
 Normal users that want to keep track of how they feel during a day.
 
-## 1.6 Product Scope ##
+## 1.5 Product Scope ##
 Mood2Day is a mobile application that anyone can use to keep track of their mood and accomplishments for each day. They can also see statistics for current week, and also for each year.
 
-## 1.7 References ##
+## 1.6 References ##
 Mood2Day website:
 https://kim3z.github.io/univaasa-mobile-app-course/
 
@@ -77,19 +74,16 @@ Normal users that want to keep track of their mood and achievements per day.
 ## 2.5 Design and Implementation Constraints ##
 React Native, which is a cross platform mobile application framework, is used to develop Mood2Day application. The programming language used is JavaScript. Mood2Day uses Firebase to authenticate users, and Firestore NoSQL cloud database to store user data.
 
-## 2.6 User Documentation ##
-Wiki?
-
-## 2.7 Assumptions and Dependencies ##
+## 2.6 Assumptions and Dependencies ##
 Mood2Day is built using React Native, which is based on JavaScript. Therefore, it requires Node.js and react-native to be installed for building the application. For running the application on emulators, developer sould also install React Native CLI, Android Studio and Java Development Kit for running on Android.
 
-## 2.8 Authentication
+## 2.7 Authentication
 <div>
 Firebase is used for authenticating users. When registering to this application, user gives email and password so that we can sign them up to firebase. Only email authentication is enabled, and user's password is encrypted.
 </div>
 <img src="assets/app-images/firebase_auth.JPG" />
 
-## 2.9 Storage
+## 2.8 Storage
 <div>
 Firestore cloud NoSQL database is used for creating, updating, reading and deleting moods. This way a user's data is accessible through the internet, instead of storing data directly on device. This way, user can access data even when changing phones. In addition, this is good if Mood2Day ever creates a web application, where the same data needs to be accessed.
 </div>
