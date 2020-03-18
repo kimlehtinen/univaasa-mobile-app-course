@@ -66,17 +66,16 @@ class Moods extends React.Component {
         // set each mood date in correct format to be displayed in Calendar
         for (const mood of moods) {
             if (mood.date) {
+                let moodDate = ''
                 if ('toDate' in mood.date) {
-                    let moodDate = new Date(mood.date.toDate())
-                    moodDate = new Date( new Date(moodDate).setHours(15,0,0,0))
-                    moodDate = moodDate.toISOString().split('T')[0]
-                    markedDates[moodDate] = {selected: true, marked: true, selectedColor: 'blue'}
+                    moodDate = new Date(mood.date.toDate())
                 } else {
-                    let moodDate = new Date(mood.date)
-                    moodDate = new Date( new Date(moodDate).setHours(15,0,0,0))
-                    moodDate = moodDate.toISOString().split('T')[0]
-                    markedDates[moodDate] = {selected: true, marked: true, selectedColor: 'blue'}
+                    moodDate = new Date(mood.date)
                 }
+
+                moodDate = new Date( new Date(moodDate).setHours(15,0,0,0))
+                moodDate = moodDate.toISOString().split('T')[0]
+                markedDates[moodDate] = {selected: true, marked: true, selectedColor: 'blue'}
             }
         }
 
