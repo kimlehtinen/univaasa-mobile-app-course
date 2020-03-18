@@ -11,7 +11,7 @@ This is a guide for installing and running Mood2Day.
 ## Windows Development Environment
 I recommend this guide for setting up Windows Development Environment https://codeburst.io/setting-up-development-environment-using-react-native-on-windows-dd240e69f776
 
-## Installation
+## Install application and dependencies
 
 ```
 # clone the repository
@@ -49,3 +49,5 @@ cd ..
 # run again on android
 npm run android
 ```
+## Note
+If you search for the app on a phone or emulator, it's name is easyweatherapp because this application was first intended to be a weather app. After creating this project, the developer of this application came up with this application idea instead :)
